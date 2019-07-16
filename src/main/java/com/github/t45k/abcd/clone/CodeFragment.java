@@ -7,8 +7,7 @@ public class CodeFragment {
     private final Path filePath;
     private final int startLine;
     private final int endLine;
-    private final String
-            rawCode;
+    private final String rawCode;
 
     public CodeFragment(final String hashValue, final Path filePath, final int startLine, final int endLine, final String rawCode) {
         this.hashValue = hashValue;
