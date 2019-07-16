@@ -7,7 +7,7 @@ public class AbstractASTConstructor {
         if (classpathRootPath == null || libRootPath == null) {
             return new ASTConstructor();
         }else {
-            return new BindedASTConstructor(classpathRootPath,libRootPath);
+            return new BindingASTConstructor(classpathRootPath,libRootPath);
         }
     }
 }
