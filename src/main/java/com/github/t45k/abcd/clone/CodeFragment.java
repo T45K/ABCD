@@ -34,7 +34,8 @@ public class CodeFragment {
         return endLine;
     }
 
-    public String getRawCode() {
-        return rawCode;
+    @Override
+    public String toString() {
+        return this.rawCode;
     }
 }
