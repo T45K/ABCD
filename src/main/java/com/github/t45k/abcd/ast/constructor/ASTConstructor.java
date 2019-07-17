@@ -1,4 +1,4 @@
-package com.github.t45k.abcd.ast;
+package com.github.t45k.abcd.ast.constructor;
 
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTParser;

@@ -1,4 +1,4 @@
-package com.github.t45k.abcd.ast;
+package com.github.t45k.abcd.ast.constructor;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jdt.core.JavaCore;
