@@ -18,18 +18,18 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public abstract class AbstractASTConstructor {
-    public static AbstractASTConstructor create(final Path classpathRootPath, final Path libRootPath) {
+    public static AbstractASTConstructor create(final Path targetFilesRootPath, final Path classpathRootPath, final Path libRootPath) {
         if (classpathRootPath == null || libRootPath == null) {
-            return new ASTConstructor();
+            return new ASTConstructor(targetFilesRootPath);
         } else {
-            return new BindingASTConstructor(classpathRootPath, libRootPath);
+            return new BindingASTConstructor(targetFilesRootPath, classpathRootPath, libRootPath);
         }
     }
 
     public abstract ASTParser createParser();
 
     @SuppressWarnings("unchecked")
-    protected Map<String, String> getOptionMap() {
+    Map<String, String> getOptionMap() {
         final Map<String, String> options = DefaultCodeFormatterConstants.getEclipseDefaultSettings();
         options.put(JavaCore.COMPILER_COMPLIANCE, JavaCore.VERSION_10);
         options.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, JavaCore.VERSION_10);
@@ -55,7 +55,7 @@ public abstract class AbstractASTConstructor {
         return fileASTList;
     }
 
-    protected List<Path> getTargetFiles(final Path targetFileRootPath, final String targetExtension) {
+    List<Path> getTargetFiles(final Path targetFileRootPath, final String targetExtension) {
         try {
             return Files.walk(targetFileRootPath)
                     .filter(path -> path.toString().endsWith(targetExtension))
@@ -65,7 +65,7 @@ public abstract class AbstractASTConstructor {
         }
     }
 
-    protected String[] convertPathListToStringArray(final List<Path> pathList) {
+    String[] convertPathListToStringArray(final List<Path> pathList) {
         return pathList.stream()
                 .map(Path::toString)
                 .toArray(String[]::new);

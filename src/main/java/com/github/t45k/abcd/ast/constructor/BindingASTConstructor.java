@@ -8,10 +8,12 @@ import java.util.List;
 import java.util.Map;
 
 public class BindingASTConstructor extends AbstractASTConstructor {
+    private final Path targetFileRootPath;
     private final Path classpathRootPath;
     private final Path libRootPath;
 
-    BindingASTConstructor(final Path classpathRootPath, final Path libRootPath) {
+    BindingASTConstructor(final Path targetFileRootPath, final Path classpathRootPath, final Path libRootPath) {
+        this.targetFileRootPath = targetFileRootPath;
         this.classpathRootPath = classpathRootPath;
         this.libRootPath = libRootPath;
     }
