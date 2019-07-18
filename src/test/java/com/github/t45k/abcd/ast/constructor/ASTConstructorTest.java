@@ -12,25 +12,25 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class ASTConstructorTest {
-    private static String basicPath = "sample/astConstructionSample/src";
+    private static String BASIC_PATH = "sample/astConstructionSample/src";
 
     @Test
     public void testConstructAST() {
         final ASTConstructor astConstructor = new ASTConstructor();
-        final Path targetPath = Paths.get(basicPath);
+        final Path targetPath = Paths.get(BASIC_PATH);
         final List<FileAST> fileASTList = astConstructor.constructFileAST(targetPath);
 
         assertThat(fileASTList).isNotNull();
         assertThat(fileASTList).hasSize(3);
-        assertThat(fileASTList.get(0).getPath()).isEqualTo(Paths.get(basicPath, "a", "A.java"));
-        assertThat(fileASTList.get(1).getPath()).isEqualTo(Paths.get(basicPath, "a", "b", "B.java"));
-        assertThat(fileASTList.get(2).getPath()).isEqualTo(Paths.get(basicPath, "c", "C.java"));
+        assertThat(fileASTList.get(0).getPath()).isEqualTo(Paths.get(BASIC_PATH, "a", "A.java"));
+        assertThat(fileASTList.get(1).getPath()).isEqualTo(Paths.get(BASIC_PATH, "a", "b", "B.java"));
+        assertThat(fileASTList.get(2).getPath()).isEqualTo(Paths.get(BASIC_PATH, "c", "C.java"));
     }
 
     @Test
     public void testConstructEmptyList() {
         final ASTConstructor astConstructor = new ASTConstructor();
-        final Path targetPath = Paths.get(basicPath, "empty");
+        final Path targetPath = Paths.get(BASIC_PATH, "empty");
         final List<FileAST> fileASTList = astConstructor.constructFileAST(targetPath);
 
         assertThat(fileASTList).isNotNull();
