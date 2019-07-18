@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
+import java.util.Set;
 
 import static com.github.t45k.abcd.ast.constructor.ASTConstructor.INVALID_PATH_EXCEPTION_MESSAGE;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -18,7 +18,7 @@ public class NonBindingASTConstructorTest {
     public void testConstructAST() {
         final IASTConstructor astConstructor = new NonBindingASTConstructor();
         final Path targetFilesRootPath = Paths.get(BASIC_PATH);
-        final List<FileAST> fileASTList = astConstructor.constructFileAST(targetFilesRootPath);
+        final Set<FileAST> fileASTList = astConstructor.constructFileAST(targetFilesRootPath);
 
         assertThat(fileASTList).isNotNull();
         assertThat(fileASTList).hasSize(3);
@@ -31,7 +31,7 @@ public class NonBindingASTConstructorTest {
     public void testConstructEmptyList() {
         final IASTConstructor astConstructor = new NonBindingASTConstructor();
         final Path emptyDirPath = Paths.get(BASIC_PATH, "empty");
-        final List<FileAST> fileASTList = astConstructor.constructFileAST(emptyDirPath);
+        final Set<FileAST> fileASTList = astConstructor.constructFileAST(emptyDirPath);
 
         assertThat(fileASTList).isNotNull();
         assertThat(fileASTList).isEmpty();
