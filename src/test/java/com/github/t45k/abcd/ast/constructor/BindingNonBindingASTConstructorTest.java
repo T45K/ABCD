@@ -9,13 +9,13 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class BindingASTConstructorTest {
+public class BindingNonBindingASTConstructorTest {
     private static final String BASIC_PATH = "sample/astConstructionSample/src";
 
     @Test
     public void testConstructAST() {
         final Path targetFilesRootPath = Paths.get(BASIC_PATH);
-        final AbstractASTConstructor astConstructor = new BindingASTConstructor(targetFilesRootPath, targetFilesRootPath, targetFilesRootPath);
+        final ASTConstructor astConstructor = new BindingASTConstructor(targetFilesRootPath, targetFilesRootPath, targetFilesRootPath);
         final List<FileAST> fileASTList = astConstructor.constructFileAST(targetFilesRootPath);
 
         assertThat(fileASTList).isNotNull();
