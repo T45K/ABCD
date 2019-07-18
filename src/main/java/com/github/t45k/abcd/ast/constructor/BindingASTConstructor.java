@@ -6,8 +6,8 @@ import org.eclipse.jdt.core.dom.ASTParser;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class BindingASTConstructor extends ASTConstructor {
@@ -36,21 +36,21 @@ public class BindingASTConstructor extends ASTConstructor {
     }
 
     private void setParseEnvironment(final ASTParser parser) {
-        final List<Path> classpathList = getTargetFiles(this.libRootPath, ".jar");
-        classpathList.add(this.classpathRootPath);
-        final String[] classpathEntries = convertPathListToStringArray(classpathList);
+        final Set<Path> classpaths = getTargetFiles(this.libRootPath, ".jar");
+        classpaths.add(this.classpathRootPath);
+        final String[] classpathEntries = convertPathListToStringArray(classpaths);
 
-        final List<Path> sourcePathList = getTargetDirs(this.targetFileRootPath);
-        final String[] sourcePathEntries = convertPathListToStringArray(sourcePathList);
+        final Set<Path> sourcePaths = getTargetDirs(this.targetFileRootPath);
+        final String[] sourcePathEntries = convertPathListToStringArray(sourcePaths);
 
         parser.setEnvironment(classpathEntries, sourcePathEntries, null, false);
     }
 
-    private List<Path> getTargetDirs(final Path rootPath) {
+    private Set<Path> getTargetDirs(final Path rootPath) {
         try {
             return Files.walk(rootPath)
                     .filter(Files::isDirectory)
-                    .collect(Collectors.toList());
+                    .collect(Collectors.toSet());
         } catch (IOException e) {
             throw new RuntimeException(INVALID_PATH_EXCEPTION_MESSAGE);
         }

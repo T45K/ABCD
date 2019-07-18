@@ -13,7 +13,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -41,8 +40,8 @@ public abstract class ASTConstructor implements IASTConstructor {
             }
         };
 
-        final List<Path> targetFilePathList = getTargetFiles(targetFilesRootPath, ".java");
-        final String[] sourceFilePaths = convertPathListToStringArray(targetFilePathList);
+        final Set<Path> targetFilePaths = getTargetFiles(targetFilesRootPath, ".java");
+        final String[] sourceFilePaths = convertPathListToStringArray(targetFilePaths);
         parser.createASTs(sourceFilePaths, null, new String[]{}, requestor, new NullProgressMonitor());
 
         return fileASTs;
@@ -57,18 +56,18 @@ public abstract class ASTConstructor implements IASTConstructor {
         return options;
     }
 
-    List<Path> getTargetFiles(final Path targetFileRootPath, final String targetExtension) {
+    Set<Path> getTargetFiles(final Path targetFileRootPath, final String targetExtension) {
         try {
             return Files.walk(targetFileRootPath)
                     .filter(path -> path.toString().endsWith(targetExtension))
-                    .collect(Collectors.toList());
+                    .collect(Collectors.toSet());
         } catch (IOException e) {
             throw new RuntimeException(INVALID_PATH_EXCEPTION_MESSAGE);
         }
     }
 
-    String[] convertPathListToStringArray(final List<Path> pathList) {
-        return pathList.stream()
+    String[] convertPathListToStringArray(final Set<Path> paths) {
+        return paths.stream()
                 .map(Path::toString)
                 .toArray(String[]::new);
     }
