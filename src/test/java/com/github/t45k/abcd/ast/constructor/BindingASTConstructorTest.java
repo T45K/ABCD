@@ -7,7 +7,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -39,7 +38,7 @@ public class BindingASTConstructorTest {
         final Method getTargetDirs = BindingASTConstructor.class.getDeclaredMethod("getTargetDirs", Path.class);
         getTargetDirs.setAccessible(true);
         final ASTConstructor astConstructor = new BindingASTConstructor(targetFilesRootPath, targetFilesRootPath, targetFilesRootPath);
-        final List<Path> dirs = (List<Path>) getTargetDirs.invoke(astConstructor, targetFilesRootPath);
+        final Set<Path> dirs = (Set<Path>) getTargetDirs.invoke(astConstructor, targetFilesRootPath);
 
         final Set<Path> paths = Stream.of(targetFilesRootPath, Paths.get(BASIC_PATH, "a"), Paths.get(BASIC_PATH, "a", "b"), Paths.get(BASIC_PATH, "c"), Paths.get(BASIC_PATH, "empty")).collect(Collectors.toSet());
         assertThat(dirs).isNotNull();
