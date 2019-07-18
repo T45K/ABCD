@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 public abstract class AbstractASTConstructor {
     public static AbstractASTConstructor create(final Path targetFilesRootPath, final Path classpathRootPath, final Path libRootPath) {
         if (classpathRootPath == null || libRootPath == null) {
-            return new ASTConstructor(targetFilesRootPath);
+            return new ASTConstructor();
         } else {
             return new BindingASTConstructor(targetFilesRootPath, classpathRootPath, libRootPath);
         }
