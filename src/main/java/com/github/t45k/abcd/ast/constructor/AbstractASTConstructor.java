@@ -26,6 +26,25 @@ public abstract class AbstractASTConstructor {
         }
     }
 
+    public List<FileAST> constructFileAST(final Path targetFilesRootPath) {
+        final ASTParser parser = createParser();
+
+        final List<FileAST> fileASTList = new ArrayList<>();
+        final FileASTRequestor requestor = new FileASTRequestor() {
+            @Override
+            public void acceptAST(final String sourceFilePath, final CompilationUnit ast) {
+                ast.recordModifications();
+                fileASTList.add(new FileAST(Paths.get(sourceFilePath), ast));
+            }
+        };
+
+        final List<Path> targetFilePathList = getTargetFiles(targetFilesRootPath, ".java");
+        final String[] sourceFilePaths = convertPathListToStringArray(targetFilePathList);
+        parser.createASTs(sourceFilePaths, null, new String[]{}, requestor, new NullProgressMonitor());
+
+        return fileASTList;
+    }
+
     public abstract ASTParser createParser();
 
     @SuppressWarnings("unchecked")
@@ -35,24 +54,6 @@ public abstract class AbstractASTConstructor {
         options.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, JavaCore.VERSION_10);
         options.put(JavaCore.COMPILER_SOURCE, JavaCore.VERSION_10);
         return options;
-    }
-
-    public List<FileAST> constructFileAST(final Path targetFilesRootPath) {
-        final ASTParser parser = createParser();
-
-        final List<FileAST> fileASTList = new ArrayList<>();
-        final FileASTRequestor requestor = new FileASTRequestor() {
-            @Override
-            public void acceptAST(final String sourceFilePath, final CompilationUnit ast) {
-                fileASTList.add(new FileAST(Paths.get(sourceFilePath), ast));
-            }
-        };
-
-        final List<Path> targetFilePathList = getTargetFiles(targetFilesRootPath, ".java");
-        final String[] filePathStrings = convertPathListToStringArray(targetFilePathList);
-        parser.createASTs(filePathStrings, null, new String[]{}, requestor, new NullProgressMonitor());
-
-        return fileASTList;
     }
 
     List<Path> getTargetFiles(final Path targetFileRootPath, final String targetExtension) {
