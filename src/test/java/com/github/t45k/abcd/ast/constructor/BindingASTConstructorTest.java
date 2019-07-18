@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class BindingASTConstructorTest {
-    private static final String BASIC_PATH = "./sample/astConstructionSample/src";
+    private static final String BASIC_PATH = "sample/astConstructionSample/src";
 
     @Test
     public void testConstructAST() {
