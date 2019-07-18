@@ -10,6 +10,7 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.github.t45k.abcd.ast.constructor.ASTConstructor.INVALID_PATH_EXCEPTION_MESSAGE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -43,5 +44,14 @@ public class BindingASTConstructorTest {
         assertThat(dirs).isNotEmpty();
         assertThat(dirs).hasSize(5);
         assertThat(dirs).isEqualTo(paths);
+    }
+
+    @Test
+    public void testException() {
+        final Path targetFilesRootPath = Paths.get(BASIC_PATH);
+        final Path invalidPath = Paths.get("invalidPath");
+        final IASTConstructor astConstructor = new BindingASTConstructor(invalidPath, targetFilesRootPath, targetFilesRootPath);
+        assertThatThrownBy(() -> astConstructor.constructFileAST(targetFilesRootPath))
+                .isInstanceOfSatisfying(RuntimeException.class, e -> assertThat(e.getMessage()).isEqualTo(INVALID_PATH_EXCEPTION_MESSAGE));
     }
 }
