@@ -7,8 +7,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static com.github.t45k.abcd.ast.constructor.ASTConstructor.INVALID_PATH_EXCEPTION_MESSAGE;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -21,7 +22,7 @@ public class BindingASTConstructorTest {
     public void testConstructAST() {
         final Path targetFilesRootPath = Paths.get(BASIC_PATH);
         final IASTConstructor astConstructor = new BindingASTConstructor(targetFilesRootPath, targetFilesRootPath, targetFilesRootPath);
-        final List<FileAST> fileASTList = astConstructor.constructFileAST(targetFilesRootPath);
+        final Set<FileAST> fileASTList = astConstructor.constructFileAST(targetFilesRootPath);
 
         assertThat(fileASTList).isNotNull();
         assertThat(fileASTList).hasSize(3);
@@ -37,17 +38,13 @@ public class BindingASTConstructorTest {
         final Method getTargetDirs = BindingASTConstructor.class.getDeclaredMethod("getTargetDirs", Path.class);
         getTargetDirs.setAccessible(true);
         final ASTConstructor astConstructor = new BindingASTConstructor(targetFilesRootPath, targetFilesRootPath, targetFilesRootPath);
-        final List<Path> dirs = (List<Path>) getTargetDirs.invoke(astConstructor, targetFilesRootPath);
+        final Set<Path> dirs = (Set<Path>) getTargetDirs.invoke(astConstructor, targetFilesRootPath);
 
-        //final List<Path> paths = Arrays.asList(targetFilesRootPath, Paths.get(BASIC_PATH, "a"), Paths.get(BASIC_PATH, "a", "b"), Paths.get(BASIC_PATH, "c"), Paths.get(BASIC_PATH, "empty"));
+        final Set<Path> paths = Stream.of(targetFilesRootPath, Paths.get(BASIC_PATH, "a"), Paths.get(BASIC_PATH, "a", "b"), Paths.get(BASIC_PATH, "c"), Paths.get(BASIC_PATH, "empty")).collect(Collectors.toSet());
         assertThat(dirs).isNotNull();
         assertThat(dirs).isNotEmpty();
         assertThat(dirs).hasSize(5);
-        assertThat(dirs).anyMatch(path -> path.equals(Paths.get(BASIC_PATH, "a")));
-        assertThat(dirs).anyMatch(path -> path.equals(Paths.get(BASIC_PATH, "a", "b")));
-        assertThat(dirs).anyMatch(path -> path.equals(Paths.get(BASIC_PATH, "c")));
-        assertThat(dirs).anyMatch(path -> path.equals(Paths.get(BASIC_PATH)));
-        assertThat(dirs).anyMatch(path -> path.equals(Paths.get(BASIC_PATH, "empty")));
+        assertThat(dirs).isEqualTo(paths);
     }
 
     @Test

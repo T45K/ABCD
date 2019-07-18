@@ -12,9 +12,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public abstract class ASTConstructor implements IASTConstructor {
@@ -28,23 +28,23 @@ public abstract class ASTConstructor implements IASTConstructor {
     }
 
     @Override
-    public List<FileAST> constructFileAST(final Path targetFilesRootPath) {
+    public Set<FileAST> constructFileAST(final Path targetFilesRootPath) {
         final ASTParser parser = createParser();
 
-        final List<FileAST> fileASTList = new ArrayList<>();
+        final Set<FileAST> fileASTs = new HashSet<>();
         final FileASTRequestor requestor = new FileASTRequestor() {
             @Override
             public void acceptAST(final String sourceFilePath, final CompilationUnit ast) {
                 ast.recordModifications();
-                fileASTList.add(new FileAST(Paths.get(sourceFilePath), ast));
+                fileASTs.add(new FileAST(Paths.get(sourceFilePath), ast));
             }
         };
 
-        final List<Path> targetFilePathList = getTargetFiles(targetFilesRootPath, ".java");
-        final String[] sourceFilePaths = convertPathListToStringArray(targetFilePathList);
+        final Set<Path> targetFilePaths = getTargetFiles(targetFilesRootPath, ".java");
+        final String[] sourceFilePaths = convertPathListToStringArray(targetFilePaths);
         parser.createASTs(sourceFilePaths, null, new String[]{}, requestor, new NullProgressMonitor());
 
-        return fileASTList;
+        return fileASTs;
     }
 
     @SuppressWarnings("unchecked")
@@ -56,18 +56,18 @@ public abstract class ASTConstructor implements IASTConstructor {
         return options;
     }
 
-    List<Path> getTargetFiles(final Path targetFileRootPath, final String targetExtension) {
+    Set<Path> getTargetFiles(final Path targetFileRootPath, final String targetExtension) {
         try {
             return Files.walk(targetFileRootPath)
                     .filter(path -> path.toString().endsWith(targetExtension))
-                    .collect(Collectors.toList());
+                    .collect(Collectors.toSet());
         } catch (IOException e) {
             throw new RuntimeException(INVALID_PATH_EXCEPTION_MESSAGE);
         }
     }
 
-    String[] convertPathListToStringArray(final List<Path> pathList) {
-        return pathList.stream()
+    String[] convertPathListToStringArray(final Set<Path> paths) {
+        return paths.stream()
                 .map(Path::toString)
                 .toArray(String[]::new);
     }
