@@ -16,9 +16,9 @@ public class NonBindingASTConstructorTest {
 
     @Test
     public void testConstructAST() {
-        final NonBindingASTConstructor nonBindingAstConstructor = new NonBindingASTConstructor();
-        final Path targetPath = Paths.get(BASIC_PATH);
-        final List<FileAST> fileASTList = nonBindingAstConstructor.constructFileAST(targetPath);
+        final IASTConstructor astConstructor = new NonBindingASTConstructor();
+        final Path targetFilesRootPath = Paths.get(BASIC_PATH);
+        final List<FileAST> fileASTList = astConstructor.constructFileAST(targetFilesRootPath);
 
         assertThat(fileASTList).isNotNull();
         assertThat(fileASTList).hasSize(3);
@@ -29,9 +29,9 @@ public class NonBindingASTConstructorTest {
 
     @Test
     public void testConstructEmptyList() {
-        final NonBindingASTConstructor nonBindingAstConstructor = new NonBindingASTConstructor();
-        final Path targetPath = Paths.get(BASIC_PATH, "empty");
-        final List<FileAST> fileASTList = nonBindingAstConstructor.constructFileAST(targetPath);
+        final IASTConstructor astConstructor = new NonBindingASTConstructor();
+        final Path emptyDirPath = Paths.get(BASIC_PATH, "empty");
+        final List<FileAST> fileASTList = astConstructor.constructFileAST(emptyDirPath);
 
         assertThat(fileASTList).isNotNull();
         assertThat(fileASTList).isEmpty();
@@ -39,9 +39,9 @@ public class NonBindingASTConstructorTest {
 
     @Test
     public void testException() {
-        final NonBindingASTConstructor nonBindingAstConstructor = new NonBindingASTConstructor();
-        final Path targetPath = Paths.get("invalidPath");
-        assertThatThrownBy(() -> nonBindingAstConstructor.constructFileAST(targetPath))
+        final IASTConstructor astConstructor = new NonBindingASTConstructor();
+        final Path targetFilesRootPath = Paths.get("invalidPath");
+        assertThatThrownBy(() -> astConstructor.constructFileAST(targetFilesRootPath))
                 .isInstanceOfSatisfying(RuntimeException.class, e -> assertThat(e.getMessage()).isEqualTo(INVALID_PATH_EXCEPTION_MESSAGE));
     }
 }
