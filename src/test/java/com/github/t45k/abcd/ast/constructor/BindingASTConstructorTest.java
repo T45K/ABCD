@@ -25,9 +25,9 @@ public class BindingASTConstructorTest {
 
         assertThat(fileASTList).isNotNull();
         assertThat(fileASTList).hasSize(3);
-        assertThat(fileASTList.get(0).getPath()).isEqualTo(Paths.get(BASIC_PATH, "a", "A.java"));
-        assertThat(fileASTList.get(1).getPath()).isEqualTo(Paths.get(BASIC_PATH, "a", "b", "B.java"));
-        assertThat(fileASTList.get(2).getPath()).isEqualTo(Paths.get(BASIC_PATH, "c", "C.java"));
+        assertThat(fileASTList).anyMatch(fileAST -> fileAST.getPath().equals(Paths.get(BASIC_PATH, "a", "A.java")));
+        assertThat(fileASTList).anyMatch(fileAST -> fileAST.getPath().equals(Paths.get(BASIC_PATH, "a", "b", "B.java")));
+        assertThat(fileASTList).anyMatch(fileAST -> fileAST.getPath().equals(Paths.get(BASIC_PATH, "c", "C.java")));
     }
 
     @Test
@@ -39,11 +39,15 @@ public class BindingASTConstructorTest {
         final ASTConstructor astConstructor = new BindingASTConstructor(targetFilesRootPath, targetFilesRootPath, targetFilesRootPath);
         final List<Path> dirs = (List<Path>) getTargetDirs.invoke(astConstructor, targetFilesRootPath);
 
-        final List<Path> paths = Arrays.asList(targetFilesRootPath, Paths.get(BASIC_PATH, "a"), Paths.get(BASIC_PATH, "a", "b"), Paths.get(BASIC_PATH, "c"), Paths.get(BASIC_PATH, "empty"));
+        //final List<Path> paths = Arrays.asList(targetFilesRootPath, Paths.get(BASIC_PATH, "a"), Paths.get(BASIC_PATH, "a", "b"), Paths.get(BASIC_PATH, "c"), Paths.get(BASIC_PATH, "empty"));
         assertThat(dirs).isNotNull();
         assertThat(dirs).isNotEmpty();
         assertThat(dirs).hasSize(5);
-        assertThat(dirs).isEqualTo(paths);
+        assertThat(dirs).anyMatch(path -> path.equals(Paths.get(BASIC_PATH, "a")));
+        assertThat(dirs).anyMatch(path -> path.equals(Paths.get(BASIC_PATH, "a", "b")));
+        assertThat(dirs).anyMatch(path -> path.equals(Paths.get(BASIC_PATH, "c")));
+        assertThat(dirs).anyMatch(path -> path.equals(Paths.get(BASIC_PATH)));
+        assertThat(dirs).anyMatch(path -> path.equals(Paths.get(BASIC_PATH, "empty")));
     }
 
     @Test

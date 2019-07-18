@@ -22,9 +22,9 @@ public class NonBindingASTConstructorTest {
 
         assertThat(fileASTList).isNotNull();
         assertThat(fileASTList).hasSize(3);
-        assertThat(fileASTList.get(0).getPath()).isEqualTo(Paths.get(BASIC_PATH, "a", "A.java"));
-        assertThat(fileASTList.get(1).getPath()).isEqualTo(Paths.get(BASIC_PATH, "a", "b", "B.java"));
-        assertThat(fileASTList.get(2).getPath()).isEqualTo(Paths.get(BASIC_PATH, "c", "C.java"));
+        assertThat(fileASTList).anyMatch(fileAST -> fileAST.getPath().equals(Paths.get(BASIC_PATH, "a", "A.java")));
+        assertThat(fileASTList).anyMatch(fileAST -> fileAST.getPath().equals(Paths.get(BASIC_PATH, "a", "b", "B.java")));
+        assertThat(fileASTList).anyMatch(fileAST -> fileAST.getPath().equals(Paths.get(BASIC_PATH, "c", "C.java")));
     }
 
     @Test
