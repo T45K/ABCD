@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public abstract class AbstractASTConstructor {
+public abstract class AbstractASTConstructor implements IASTConstructor{
     static final String INVALID_PATH_EXCEPTION_MESSAGE = "Invalid path was specified";
 
     public static AbstractASTConstructor create(final Path targetFilesRootPath, final Path classpathRootPath, final Path libRootPath) {
@@ -28,6 +28,7 @@ public abstract class AbstractASTConstructor {
         }
     }
 
+    @Override
     public List<FileAST> constructFileAST(final Path targetFilesRootPath) {
         final ASTParser parser = createParser();
 
@@ -47,6 +48,7 @@ public abstract class AbstractASTConstructor {
         return fileASTList;
     }
 
+    @Override
     public abstract ASTParser createParser();
 
     @SuppressWarnings("unchecked")
