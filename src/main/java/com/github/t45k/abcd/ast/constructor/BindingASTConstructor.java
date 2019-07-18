@@ -52,7 +52,7 @@ public class BindingASTConstructor extends AbstractASTConstructor {
                     .filter(Files::isDirectory)
                     .collect(Collectors.toList());
         } catch (IOException e) {
-            throw new RuntimeException("invalid argument was specified");
+            throw new RuntimeException(INVALID_PATH_EXCEPTION_MESSAGE);
         }
     }
 }

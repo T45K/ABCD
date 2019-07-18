@@ -18,6 +18,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public abstract class AbstractASTConstructor {
+    static final String INVALID_PATH_EXCEPTION_MESSAGE = "Invalid path was specified";
+
     public static AbstractASTConstructor create(final Path targetFilesRootPath, final Path classpathRootPath, final Path libRootPath) {
         if (classpathRootPath == null || libRootPath == null) {
             return new ASTConstructor();
@@ -62,7 +64,7 @@ public abstract class AbstractASTConstructor {
                     .filter(path -> path.toString().endsWith(targetExtension))
                     .collect(Collectors.toList());
         } catch (IOException e) {
-            throw new RuntimeException("Invalid path was specified");
+            throw new RuntimeException(INVALID_PATH_EXCEPTION_MESSAGE);
         }
     }
 
