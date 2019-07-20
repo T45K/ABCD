@@ -1,10 +1,10 @@
 package com.github.t45k.abcd.clone.detection.normalizer;
 
 import com.github.t45k.abcd.clone.detection.DetectionMode;
-import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jdt.core.dom.ASTNode;
 
 public interface CodeFragmentNormalizer {
-    String normalize(final Statement codeFragment);
+    String normalize(final ASTNode codeFragment);
 
     public static CodeFragmentNormalizer create(final DetectionMode mode) {
         switch (mode) {
