@@ -25,6 +25,7 @@ public class CloneDetection implements ICloneDetection {
                         )
                 ).values()
                 .stream()
+                .filter(set -> set.size() > 1)
                 .map(CloneSet::new)
                 .collect(Collectors.toSet());
     }
