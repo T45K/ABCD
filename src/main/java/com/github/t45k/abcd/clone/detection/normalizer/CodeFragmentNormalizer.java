@@ -6,7 +6,7 @@ import org.eclipse.jdt.core.dom.Statement;
 public interface CodeFragmentNormalizer {
     String normalize(final Statement codeFragment);
 
-    public static CodeFragmentNormalizer normalize(final DetectionMode mode) {
+    public static CodeFragmentNormalizer create(final DetectionMode mode) {
         switch (mode) {
             case TYPE1:
                 return new Type1Normalizer();
