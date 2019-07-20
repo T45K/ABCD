@@ -8,4 +8,8 @@ public class CloneSet {
     public CloneSet(final Set<CodeFragment> cloneSet) {
         this.cloneSet = cloneSet;
     }
+
+    public Set<CodeFragment> getCloneSet() {
+        return this.cloneSet;
+    }
 }
