@@ -35,6 +35,8 @@ dependencies {
 
     // Use Digest
     compile group: 'com.google.guava', name: 'guava', version: '11.0.2'
+    compile group: 'commons-codec', name: 'commons-codec', version: '1.12'
+
 
     // Use args4j
     compile group: 'args4j', name: 'args4j', version: '2.33'
