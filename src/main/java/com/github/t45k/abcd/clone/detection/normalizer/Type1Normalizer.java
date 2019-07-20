@@ -5,6 +5,7 @@ import org.eclipse.jdt.core.dom.ASTNode;
 public class Type1Normalizer implements CodeFragmentNormalizer {
     @Override
     public String normalize(final ASTNode codeFragment) {
-        return null;
+        // tmp
+        return codeFragment.toString();
     }
 }
