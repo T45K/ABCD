@@ -20,7 +20,6 @@ public class CodeFragmentFindingVisitorTest {
         final FileAST fileAST = getFileASTForTest();
         final Stream<CodeFragment> codeFragments = CodeFragmentFindingVisitor.findCodeFragments(DetectionMode.TYPE1, fileAST);
         final List<CodeFragment> list = codeFragments.collect(Collectors.toList());
-        list.forEach(e -> System.out.println(e.toString()));
         assertThat(list.size()).isEqualTo(10);
     }
 
