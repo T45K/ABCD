@@ -7,7 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Set;
 
-import static com.github.t45k.abcd.ast.constructor.ASTConstructor.INVALID_PATH_EXCEPTION_MESSAGE;
+import static com.github.t45k.abcd.ast.constructor.AbstractASTConstructor.INVALID_PATH_EXCEPTION_MESSAGE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -16,7 +16,7 @@ public class NonBindingASTConstructorTest {
 
     @Test
     public void testConstructAST() {
-        final IASTConstructor astConstructor = new NonBindingASTConstructor();
+        final ASTConstructor astConstructor = new NonBindingASTConstructor();
         final Path targetFilesRootPath = Paths.get(BASIC_PATH);
         final Set<FileAST> fileASTList = astConstructor.constructFileAST(targetFilesRootPath);
 
@@ -29,7 +29,7 @@ public class NonBindingASTConstructorTest {
 
     @Test
     public void testConstructEmptyList() {
-        final IASTConstructor astConstructor = new NonBindingASTConstructor();
+        final ASTConstructor astConstructor = new NonBindingASTConstructor();
         final Path emptyDirPath = Paths.get(BASIC_PATH, "empty");
         final Set<FileAST> fileASTList = astConstructor.constructFileAST(emptyDirPath);
 
@@ -39,7 +39,7 @@ public class NonBindingASTConstructorTest {
 
     @Test
     public void testException() {
-        final IASTConstructor astConstructor = new NonBindingASTConstructor();
+        final ASTConstructor astConstructor = new NonBindingASTConstructor();
         final Path targetFilesRootPath = Paths.get("invalidPath");
         assertThatThrownBy(() -> astConstructor.constructFileAST(targetFilesRootPath))
                 .isInstanceOfSatisfying(RuntimeException.class, e -> assertThat(e.getMessage()).isEqualTo(INVALID_PATH_EXCEPTION_MESSAGE));

@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class BindingASTConstructor extends ASTConstructor {
+public class BindingASTConstructor extends AbstractASTConstructor {
     private final Path targetFileRootPath;
     private final Path classpathRootPath;
     private final Path libRootPath;
