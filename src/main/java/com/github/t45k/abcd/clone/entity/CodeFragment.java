@@ -1,4 +1,4 @@
-package com.github.t45k.abcd.clone;
+package com.github.t45k.abcd.clone.entity;
 
 import java.nio.file.Path;
 
