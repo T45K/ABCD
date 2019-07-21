@@ -5,7 +5,7 @@ import org.eclipse.jdt.core.dom.ASTParser;
 
 import java.util.Map;
 
-public class NonBindingASTConstructor extends ASTConstructor {
+public class NonBindingASTConstructor extends AbstractASTConstructor {
 
     @Override
     public ASTParser createParser() {
