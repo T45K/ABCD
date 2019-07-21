@@ -1,10 +1,11 @@
 package com.github.t45k.abcd.clone.detection.normalizer;
 
 import com.github.t45k.abcd.clone.detection.DetectionMode;
+import org.eclipse.jdt.core.compiler.InvalidInputException;
 import org.eclipse.jdt.core.dom.ASTNode;
 
 public interface CodeFragmentNormalizer {
-    String normalize(final ASTNode codeFragment);
+    String normalize(final ASTNode codeFragment) throws InvalidInputException;
 
     public static CodeFragmentNormalizer create(final DetectionMode mode) {
         switch (mode) {
