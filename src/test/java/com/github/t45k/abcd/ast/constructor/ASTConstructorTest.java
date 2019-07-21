@@ -7,7 +7,7 @@ import java.nio.file.Paths;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class AbstractASTConstructorTest {
+public class ASTConstructorTest {
 
     @Test
     public void testCreate() {
