@@ -11,7 +11,7 @@ public interface ASTConstructor {
 
     ASTParser createParser();
 
-    static AbstractASTConstructor create(final Path targetFilesRootPath, final Path classpathRootPath, final Path libRootPath) {
+    static ASTConstructor create(final Path targetFilesRootPath, final Path classpathRootPath, final Path libRootPath) {
         if (classpathRootPath == null || libRootPath == null) {
             return new NonBindingASTConstructor();
         }
