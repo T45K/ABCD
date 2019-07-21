@@ -28,7 +28,7 @@ public class Type1Normalizer implements CodeFragmentNormalizer {
         return String.join(" ", tokenList);
     }
 
-    private String getToken(final IScanner scanner, final int tokenType) {
+    protected String getToken(final IScanner scanner, final int tokenType) {
         return new String(scanner.getCurrentTokenSource());
     }
 }
