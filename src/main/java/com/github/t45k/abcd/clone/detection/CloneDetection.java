@@ -8,14 +8,13 @@ import com.github.t45k.abcd.clone.entity.CodeFragment;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class CloneDetection implements ICloneDetection {
+public class CloneDetection {
     private final DetectionMode mode;
 
     public CloneDetection(final DetectionMode mode) {
         this.mode = mode;
     }
 
-    @Override
     public Set<CloneSet> detectClones(final Set<FileAST> fileASTs) {
         return fileASTs.stream()
                 .flatMap(fileAST -> CodeFragmentFindingVisitor.findCodeFragments(this.mode, fileAST))
