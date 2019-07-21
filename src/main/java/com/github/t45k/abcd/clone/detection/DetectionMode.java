@@ -13,8 +13,8 @@ public enum DetectionMode {
                 return DetectionMode.TYPE2;
             case "3":
                 return DetectionMode.ORIGINAL;
-            default:
-                throw new RuntimeException("invalid mode was specified");
         }
+
+        throw new RuntimeException("invalid mode was specified");
     }
 }
