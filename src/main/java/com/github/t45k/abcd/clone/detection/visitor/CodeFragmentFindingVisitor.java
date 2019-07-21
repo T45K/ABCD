@@ -5,6 +5,7 @@ import com.github.t45k.abcd.clone.detection.DetectionMode;
 import com.github.t45k.abcd.clone.detection.normalizer.CodeFragmentNormalizer;
 import com.github.t45k.abcd.clone.entity.CodeFragment;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.eclipse.jdt.core.compiler.InvalidInputException;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.CompilationUnit;
@@ -49,7 +50,13 @@ public class CodeFragmentFindingVisitor extends ASTVisitor {
     }
 
     private void addCodeFragments(final ASTNode node) {
-        final String normalizedFragment = this.normalizer.normalize(node);
+        final String normalizedFragment;
+        try {
+            normalizedFragment = this.normalizer.normalize(node);
+        } catch (InvalidInputException e) {
+            e.printStackTrace();
+            return;
+        }
         final String hashValue = DigestUtils.sha256Hex(normalizedFragment);
         final int startPosition = node.getStartPosition();
         final int startLineNumber = this.unit.getLineNumber(startPosition);
