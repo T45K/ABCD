@@ -7,4 +7,9 @@ public class TextFormat extends AbstractOutputFormat {
     public void output(final CloneSet cloneSet) {
 
     }
+
+    @Override
+    protected String getExtension() {
+        return ".txt";
+    }
 }
