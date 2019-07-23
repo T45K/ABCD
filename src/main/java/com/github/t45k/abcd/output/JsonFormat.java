@@ -2,9 +2,9 @@ package com.github.t45k.abcd.output;
 
 import com.github.t45k.abcd.clone.entity.CloneSet;
 
-public class JsonFormat implements OutputFormat {
+public class JsonFormat extends AbstractOutputFormat {
     @Override
     public void output(final CloneSet cloneSet) {
-        
+
     }
 }
