@@ -57,13 +57,13 @@ public class CodeFragmentFindingVisitor extends ASTVisitor {
             e.printStackTrace();
             return;
         }
-        final String hashValue = DigestUtils.sha256Hex(normalizedFragment);
+
         final int startPosition = node.getStartPosition();
         final int startLineNumber = this.unit.getLineNumber(startPosition);
         final int endPosition = startPosition + node.getLength() - 1;
         final int endLineNumber = this.unit.getLineNumber(endPosition);
 
-        final CodeFragment codeFragment = new CodeFragment(hashValue, this.filePath, startLineNumber, endLineNumber, node.toString());
+        final CodeFragment codeFragment = new CodeFragment(this.filePath, startLineNumber, endLineNumber, normalizedFragment);
         this.codeFragments.add(codeFragment);
     }
 
