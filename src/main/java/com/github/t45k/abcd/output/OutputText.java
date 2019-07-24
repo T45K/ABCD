@@ -2,7 +2,7 @@ package com.github.t45k.abcd.output;
 
 import com.github.t45k.abcd.clone.entity.CloneSet;
 
-public class XMLFormat extends AbstractOutputFormat {
+public class OutputText extends AbstractOutput {
     @Override
     public void output(final CloneSet cloneSet) {
 
@@ -10,6 +10,6 @@ public class XMLFormat extends AbstractOutputFormat {
 
     @Override
     protected String getExtension() {
-        return ".xml";
+        return ".txt";
     }
 }

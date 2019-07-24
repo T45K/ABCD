@@ -2,7 +2,7 @@ package com.github.t45k.abcd.output;
 
 import com.github.t45k.abcd.clone.entity.CloneSet;
 
-public class CSVFormat extends AbstractOutputFormat {
+public class OutputCSV extends AbstractOutput {
     @Override
     public void output(final CloneSet cloneSet) {
 
