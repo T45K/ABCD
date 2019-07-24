@@ -10,6 +10,8 @@ public interface Output {
 
     String convertCloneSetToString(final CloneSet cloneSet);
 
+    String getExtension();
+
     public static Output create(final Format format) {
         switch (format) {
             case JSON:
