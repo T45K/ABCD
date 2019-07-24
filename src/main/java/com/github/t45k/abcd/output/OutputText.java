@@ -10,7 +10,7 @@ public class OutputText extends AbstractOutput {
     }
 
     @Override
-    public String convertCloneSetToString(final CloneSet cloneSet) {
+    protected String convertCloneSetToString(final CloneSet cloneSet) {
         return null;
     }
 }
