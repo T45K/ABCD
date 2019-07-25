@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class OutputTextTest {
 
     @Test
-    public void testOutput1() throws IOException {
+    public void testOutput() throws IOException {
         final Path path = Paths.get("output", "test");
         final Output output = Output.create(Format.TXT);
         output.output(path, ExampleClonesCreator.getCloneSets());
@@ -33,7 +33,7 @@ public class OutputTextTest {
     }
 
     @Test
-    public void testOutput2() throws IOException {
+    public void testOutputInDeepHierarchy() throws IOException {
         final Path path = Paths.get("output", "output", "test");
         final Output output = Output.create(Format.TXT);
         output.output(path, ExampleClonesCreator.getCloneSets());
@@ -55,7 +55,7 @@ public class OutputTextTest {
     }
 
     @Test
-    public void testOutput3() throws IOException {
+    public void testOutputInExistingFile() throws IOException {
         final Path path = Paths.get("output", "test");
         final Output output = Output.create(Format.TXT);
         final Path outputPath = Paths.get(path.toString() + ".txt");
