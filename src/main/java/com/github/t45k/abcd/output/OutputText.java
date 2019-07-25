@@ -4,7 +4,7 @@ import com.github.t45k.abcd.clone.entity.CloneSet;
 
 import java.util.stream.Collectors;
 
-public class OutputText extends AbstractOutput {
+public class OutputText extends Output {
 
     @Override
     protected String getExtension() {
