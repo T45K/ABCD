@@ -28,14 +28,12 @@ public class OutputTextTest {
         final String outputContents = new String(Files.readAllBytes(outputPath));
         Files.delete(outputPath);
         Files.delete(outputPath.getParent());
-        final String result = "clone set 1\n" +
-                "a 0 10\n" +
-                "b 10 20\n" +
-                "\n" +
-                "clone set 2\n" +
-                "c 20 30\n" +
-                "d 30 40";
-        assertThat(outputContents).isEqualTo(result);
+
+        assertThat(outputContents).contains("clone set 1");
+        assertThat(outputContents).contains("a 0 10");
+        assertThat(outputContents).contains("b 10 20");
+        assertThat(outputContents).contains("c 20 30");
+        assertThat(outputContents).contains("d 30 40");
     }
 
     @Test
@@ -52,14 +50,12 @@ public class OutputTextTest {
         Files.delete(outputPath);
         Files.delete(outputPath.getParent());
         Files.delete(outputPath.getParent().getParent());
-        final String result = "clone set 1\n" +
-                "a 0 10\n" +
-                "b 10 20\n" +
-                "\n" +
-                "clone set 2\n" +
-                "c 20 30\n" +
-                "d 30 40";
-        assertThat(outputContents).isEqualTo(result);
+
+        assertThat(outputContents).contains("clone set 1");
+        assertThat(outputContents).contains("a 0 10");
+        assertThat(outputContents).contains("b 10 20");
+        assertThat(outputContents).contains("c 20 30");
+        assertThat(outputContents).contains("d 30 40");
     }
 
     private Set<CloneSet> getCloneSets() {
