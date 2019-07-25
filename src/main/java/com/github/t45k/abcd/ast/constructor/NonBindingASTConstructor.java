@@ -5,10 +5,10 @@ import org.eclipse.jdt.core.dom.ASTParser;
 
 import java.util.Map;
 
-public class NonBindingASTConstructor extends AbstractASTConstructor {
+public class NonBindingASTConstructor extends ASTConstructor {
 
     @Override
-    public ASTParser createParser() {
+    ASTParser createParser() {
         final ASTParser parser = ASTParser.newParser(AST.JLS10);
         final Map<String, String> options = getOptionMap();
         parser.setCompilerOptions(options);
