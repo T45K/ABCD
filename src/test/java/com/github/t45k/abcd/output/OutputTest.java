@@ -19,6 +19,4 @@ public class OutputTest {
         final Output textFormat = Output.create(Format.TXT);
         assertThat(textFormat).isInstanceOf(OutputText.class);
     }
-
-
 }
