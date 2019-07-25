@@ -39,10 +39,6 @@ public abstract class Output {
         Files.write(outputFilePath, fileContents.getBytes());
     }
 
-    protected abstract String convertCloneSetToString(final CloneSet cloneSet);
-
-    protected abstract String getExtension();
-
     private void createFile(final Path filePath) throws IOException {
         if (Files.exists(filePath)) {
             return;
@@ -54,4 +50,8 @@ public abstract class Output {
 
         Files.createFile(filePath);
     }
+
+    protected abstract String convertCloneSetToString(final CloneSet cloneSet);
+
+    protected abstract String getExtension();
 }
