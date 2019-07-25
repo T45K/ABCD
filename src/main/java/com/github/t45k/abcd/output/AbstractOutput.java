@@ -19,6 +19,7 @@ public abstract class AbstractOutput implements Output {
                 .collect(Collectors.joining("\n\n"));
 
         final Path outputFilePath = filePath.resolve(getExtension());
+        createFile(outputFilePath);
 
         Files.write(outputFilePath, fileContents.getBytes());
     }
@@ -26,4 +27,13 @@ public abstract class AbstractOutput implements Output {
     protected abstract String convertCloneSetToString(final CloneSet cloneSet);
 
     protected abstract String getExtension();
+
+    private void createFile(final Path filePath) throws IOException {
+        if (Files.exists(filePath)) {
+            return;
+        }
+
+        Files.createDirectory(filePath.getParent());
+        Files.createFile(filePath);
+    }
 }
