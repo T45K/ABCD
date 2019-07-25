@@ -11,7 +11,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static com.github.t45k.abcd.ast.constructor.AbstractASTConstructor.INVALID_PATH_EXCEPTION_MESSAGE;
+import static com.github.t45k.abcd.ast.constructor.ASTConstructor.INVALID_PATH_EXCEPTION_MESSAGE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -37,7 +37,7 @@ public class BindingASTConstructorTest {
         final Path targetFilesRootPath = Paths.get(BASIC_PATH);
         final Method getTargetDirs = BindingASTConstructor.class.getDeclaredMethod("getTargetDirs", Path.class);
         getTargetDirs.setAccessible(true);
-        final AbstractASTConstructor astConstructor = new BindingASTConstructor(targetFilesRootPath, targetFilesRootPath, targetFilesRootPath);
+        final ASTConstructor astConstructor = new BindingASTConstructor(targetFilesRootPath, targetFilesRootPath, targetFilesRootPath);
         final Set<Path> dirs = (Set<Path>) getTargetDirs.invoke(astConstructor, targetFilesRootPath);
 
         final Set<Path> paths = Stream.of(targetFilesRootPath, Paths.get(BASIC_PATH, "a"), Paths.get(BASIC_PATH, "a", "b"), Paths.get(BASIC_PATH, "c"), Paths.get(BASIC_PATH, "empty")).collect(Collectors.toSet());
