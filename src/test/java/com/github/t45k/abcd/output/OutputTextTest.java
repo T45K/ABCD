@@ -58,6 +58,29 @@ public class OutputTextTest {
         assertThat(outputContents).contains("d 30 40");
     }
 
+    @Test
+    public void testOutput3() throws IOException {
+        final Path path = Paths.get("output", "test");
+        final Output output = Output.create(Format.TXT);
+        final Path outputPath = Paths.get(path.toString() + ".txt");
+        Files.createDirectory(outputPath.getParent());
+        Files.createFile(outputPath);
+
+        output.output(path, getCloneSets());
+
+        assertThat(outputPath).exists();
+
+        final String outputContents = new String(Files.readAllBytes(outputPath));
+        Files.delete(outputPath);
+        Files.delete(outputPath.getParent());
+
+        assertThat(outputContents).contains("clone set 1");
+        assertThat(outputContents).contains("a 0 10");
+        assertThat(outputContents).contains("b 10 20");
+        assertThat(outputContents).contains("c 20 30");
+        assertThat(outputContents).contains("d 30 40");
+    }
+
     private Set<CloneSet> getCloneSets() {
         final CodeFragment codeFragment1 = new CodeFragment(Paths.get("a"), 0, 10, "a");
         final CodeFragment codeFragment2 = new CodeFragment(Paths.get("b"), 10, 20, "b");
