@@ -6,15 +6,15 @@ public enum Format {
     XML,
     TXT;
 
-    public Format getFormat(final String format) {
+    public static Format getFormat(final String format) {
         switch (format) {
             case "json":
                 return Format.JSON;
-            case "CSV":
+            case "csv":
                 return Format.CSV;
-            case "XML":
+            case "xml":
                 return Format.XML;
-            case "TXT":
+            case "txt":
                 return Format.TXT;
         }
 
