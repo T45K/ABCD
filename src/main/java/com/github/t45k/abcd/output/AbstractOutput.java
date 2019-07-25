@@ -5,6 +5,7 @@ import com.github.t45k.abcd.clone.entity.CloneSet;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -18,7 +19,7 @@ public abstract class AbstractOutput implements Output {
                 .map(cloneSet -> "clone set " + index.getAndIncrement() + "\n" + convertCloneSetToString(cloneSet))
                 .collect(Collectors.joining("\n\n"));
 
-        final Path outputFilePath = filePath.resolve(getExtension());
+        final Path outputFilePath = Paths.get(filePath.toString() + getExtension());
         createFile(outputFilePath);
 
         Files.write(outputFilePath, fileContents.getBytes());
