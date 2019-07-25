@@ -34,7 +34,10 @@ public abstract class AbstractOutput implements Output {
             return;
         }
 
-        Files.createDirectory(filePath.getParent());
+        if (!Files.exists(filePath.getParent())) {
+            Files.createDirectory(filePath.getParent());
+        }
+
         Files.createFile(filePath);
     }
 }
