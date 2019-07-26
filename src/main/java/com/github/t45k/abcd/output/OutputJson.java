@@ -67,17 +67,17 @@ public class OutputJson extends Output {
     }
 
     private static class CodeFragmentInJson {
-        private final Path filePath;
+        private final String filePath;
         private final int startLine;
         private final int endLine;
 
         private CodeFragmentInJson(final Path filePath, final int startLine, final int endLine) {
-            this.filePath = filePath;
+            this.filePath = filePath.toString();
             this.startLine = startLine;
             this.endLine = endLine;
         }
 
-        public Path getFilePath() {
+        public String getFilePath() {
             return filePath;
         }
 
