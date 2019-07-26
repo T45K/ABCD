@@ -34,7 +34,7 @@ public abstract class Output {
         Files.write(outputFilePath, fileContents.getBytes());
     }
 
-    void createFile(final Path filePath) throws IOException {
+    private void createFile(final Path filePath) throws IOException {
         if (Files.exists(filePath)) {
             return;
         }
