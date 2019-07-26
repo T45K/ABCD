@@ -2,10 +2,12 @@ package com.github.t45k.abcd.output;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.github.t45k.abcd.clone.entity.CloneSet;
 import com.github.t45k.abcd.clone.entity.CodeFragment;
 
 import java.nio.file.Path;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -15,11 +17,12 @@ public class OutputJson extends Output {
 
     @Override
     String convertCloneSetsToString(final Set<CloneSet> cloneSets) {
-        final Set<CloneSetInJson> cloneSetsForJson = cloneSets.stream()
+        final List<CloneSetInJson> cloneSetsForJson = cloneSets.stream()
                 .map(this::convertCloneSetForJson)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
 
         final ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
         try {
             return objectMapper.writeValueAsString(cloneSetsForJson);
         } catch (JsonProcessingException e) {
