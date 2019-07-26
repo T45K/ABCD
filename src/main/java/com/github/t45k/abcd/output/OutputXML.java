@@ -9,16 +9,12 @@ import java.util.Set;
 public class OutputXML extends Output {
 
     @Override
-    public void output(final Path filePath, final Set<CloneSet> cloneSets) throws IOException {
-    }
-
-    @Override
-    protected String getExtension() {
-        return ".xml";
-    }
-
-    @Override
-    protected String convertCloneSetToString(final CloneSet cloneSet) {
+    String convertCloneSetsToString(final Set<CloneSet> cloneSets) {
         return null;
+    }
+
+    @Override
+    String getExtension() {
+        return ".xml";
     }
 }

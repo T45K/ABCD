@@ -5,6 +5,7 @@ import com.github.t45k.abcd.clone.entity.CloneSet;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Set;
 
 public abstract class Output {
@@ -24,9 +25,16 @@ public abstract class Output {
         throw new RuntimeException("You could not come here");
     }
 
-    public abstract void output(final Path filePath, final Set<CloneSet> cloneSets) throws IOException;
+    public void output(final Path filePath, final Set<CloneSet> cloneSets) throws IOException{
+        final String fileContents = convertCloneSetsToString(cloneSets);
 
-    void createFile(final Path filePath) throws IOException {
+        final Path outputFilePath = Paths.get(filePath.toString() + getExtension());
+        createFile(outputFilePath);
+
+        Files.write(outputFilePath, fileContents.getBytes());
+    }
+
+    private void createFile(final Path filePath) throws IOException {
         if (Files.exists(filePath)) {
             return;
         }
@@ -38,7 +46,7 @@ public abstract class Output {
         Files.createFile(filePath);
     }
 
-    protected abstract String convertCloneSetToString(final CloneSet cloneSet);
+    abstract String convertCloneSetsToString(final Set<CloneSet> cloneSets);
 
-    protected abstract String getExtension();
+    abstract String getExtension();
 }
