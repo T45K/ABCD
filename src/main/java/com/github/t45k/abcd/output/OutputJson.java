@@ -5,11 +5,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.t45k.abcd.clone.entity.CloneSet;
 import com.github.t45k.abcd.clone.entity.CodeFragment;
 
+import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class OutputJson extends Output {
+
+    @Override
+    public void output(final Path filePath, final Set<CloneSet> cloneSets) throws IOException {
+    }
 
     @Override
     protected String getExtension() {
