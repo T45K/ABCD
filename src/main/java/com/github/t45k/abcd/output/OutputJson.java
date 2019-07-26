@@ -5,65 +5,84 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.t45k.abcd.clone.entity.CloneSet;
 import com.github.t45k.abcd.clone.entity.CodeFragment;
 
-import java.io.IOException;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 public class OutputJson extends Output {
+    private final AtomicInteger index = new AtomicInteger(1);
 
     @Override
-    public void output(final Path filePath, final Set<CloneSet> cloneSets) throws IOException {
+    String convertCloneSetsToString(final Set<CloneSet> cloneSets) {
+        final Set<CloneSetInJson> cloneSetsForJson = cloneSets.stream()
+                .map(this::convertCloneSetForJson)
+                .collect(Collectors.toSet());
+
+        final ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            return objectMapper.writeValueAsString(cloneSetsForJson);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            throw new RuntimeException("failed to create Json");
+        }
     }
 
     @Override
-    protected String getExtension() {
+    String getExtension() {
         return ".json";
     }
 
-    @Override
-    protected String convertCloneSetToString(final CloneSet cloneSet) {
-        final ObjectMapper objectMapper = new ObjectMapper();
-        final List<String> json = new ArrayList<>();
+    private CloneSetInJson convertCloneSetForJson(final CloneSet cloneSet) {
+        final Set<CodeFragmentInJson> clonesForJson = cloneSet.getCloneSet().stream()
+                .map(this::convertCodeFragmentForJson)
+                .collect(Collectors.toSet());
 
-        for (final CodeFragment codeFragment : cloneSet.getCloneSet()) {
-            final JsonField jsonField = new JsonField(codeFragment.getFilePath(), codeFragment.getStartLine(), codeFragment.getEndLine());
-            try {
-                json.add(objectMapper.writeValueAsString(jsonField));
-            } catch (final JsonProcessingException e) {
-                final String elements = "{\n" +
-                        "filePath : " + jsonField.getFilePath() + ",\n" +
-                        "startLine : " + jsonField.getStartLine() + ",\n" +
-                        "endLine : " + jsonField.getEndLine() + ",\n" +
-                        "}";
-
-                json.add(elements);
-            }
-        }
-        return String.join("\n", json);
+        return new CloneSetInJson(index.getAndIncrement(), clonesForJson);
     }
 
-    private static class JsonField {
+    private CodeFragmentInJson convertCodeFragmentForJson(final CodeFragment codeFragment) {
+        return new CodeFragmentInJson(codeFragment.getFilePath(), codeFragment.getStartLine(), codeFragment.getEndLine());
+    }
+
+    private static class CloneSetInJson {
+        private final int index;
+        private final Set<CodeFragmentInJson> clones;
+
+        private CloneSetInJson(final int index, final Set<CodeFragmentInJson> clones) {
+            this.index = index;
+            this.clones = clones;
+        }
+
+        public int getIndex() {
+            return index;
+        }
+
+        public Set<CodeFragmentInJson> getClones() {
+            return clones;
+        }
+    }
+
+    private static class CodeFragmentInJson {
         private final Path filePath;
         private final int startLine;
         private final int endLine;
 
-        private JsonField(final Path filePath, final int startLine, final int endLine) {
+        private CodeFragmentInJson(final Path filePath, final int startLine, final int endLine) {
             this.filePath = filePath;
             this.startLine = startLine;
             this.endLine = endLine;
         }
 
-        private Path getFilePath() {
+        public Path getFilePath() {
             return filePath;
         }
 
-        private int getStartLine() {
+        public int getStartLine() {
             return startLine;
         }
 
-        private int getEndLine() {
+        public int getEndLine() {
             return endLine;
         }
     }
