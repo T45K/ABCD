@@ -35,7 +35,7 @@ public class ConfigTest {
     }
 
     public Config getStandardConfig() {
-        final String[] args = {"-s", ".", "-d", "3", "-o", "./output", "-f", "txt", "-b", ".", "-l", ".", "-tl", "5", "-tt", "20"};
+        final String[] args = {"-s", ".", "-d", "3", "-o", "./output", "-f", "txt", "-b", ".", "-l", ".", "-tl", "0", "-tt", "0"};
         return Config.Builder.buildFromCmdLineArgs(args);
     }
 }
