@@ -1,5 +1,7 @@
 package com.github.t45k.abcd.clone.detection.visitor;
 
+import com.github.t45k.abcd.Config;
+import com.github.t45k.abcd.ConfigTest;
 import com.github.t45k.abcd.ast.FileAST;
 import com.github.t45k.abcd.ast.constructor.ASTConstructor;
 import com.github.t45k.abcd.clone.detection.DetectionMode;
@@ -18,7 +20,8 @@ public class CodeFragmentFindingVisitorTest {
     @Test
     public void test() {
         final FileAST fileAST = getFileASTForTest();
-        final Stream<CodeFragment> codeFragments = CodeFragmentFindingVisitor.findCodeFragments(DetectionMode.TYPE1, fileAST);
+        final Config config = new ConfigTest().getStandardConfig();
+        final Stream<CodeFragment> codeFragments = CodeFragmentFindingVisitor.findCodeFragments(DetectionMode.TYPE1, fileAST, config);
         final List<CodeFragment> list = codeFragments.collect(Collectors.toList());
         assertThat(list.size()).isEqualTo(10);
     }
