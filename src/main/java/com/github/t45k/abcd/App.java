@@ -6,13 +6,22 @@ package com.github.t45k.abcd;
 import com.github.t45k.abcd.ast.FileAST;
 import com.github.t45k.abcd.ast.constructor.ASTConstructor;
 import com.github.t45k.abcd.clone.detection.CloneDetection;
+import com.github.t45k.abcd.clone.entity.CloneSet;
+import com.github.t45k.abcd.output.Output;
 
+import java.io.IOException;
 import java.util.Set;
 
 public class App {
-    public static void main(final String[] args) {
+    public static void main(final String[] args) throws IOException {
         final Config config = Config.Builder.buildFromCmdLineArgs(args);
         final ASTConstructor astConstructor = ASTConstructor.create(config);
         final Set<FileAST> fileASTs = astConstructor.constructFileAST(config.getSrcDir());
+
+        final CloneDetection cloneDetection = new CloneDetection(config);
+        final Set<CloneSet> cloneSets = cloneDetection.detectClones(fileASTs);
+
+        final Output output = Output.create(config.getFormat());
+        output.output(config.getOutputFile(), cloneSets);
     }
 }
