@@ -33,4 +33,9 @@ public class ConfigTest {
                 .isInstanceOfSatisfying(RuntimeException.class, e -> {
                 });
     }
+
+    public Config getStandardConfig(final int thresholdLine, final int thresholdToken) {
+        final String[] args = {"-s", ".", "-d", "3", "-o", "./output", "-f", "txt", "-b", ".", "-l", ".", "-tl", Integer.toString(thresholdLine), "-tt", Integer.toString(thresholdToken)};
+        return Config.Builder.buildFromCmdLineArgs(args);
+    }
 }
