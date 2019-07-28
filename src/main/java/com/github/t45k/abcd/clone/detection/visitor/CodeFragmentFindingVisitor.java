@@ -2,7 +2,6 @@ package com.github.t45k.abcd.clone.detection.visitor;
 
 import com.github.t45k.abcd.Config;
 import com.github.t45k.abcd.ast.FileAST;
-import com.github.t45k.abcd.clone.detection.DetectionMode;
 import com.github.t45k.abcd.clone.detection.normalizer.CodeFragmentNormalizer;
 import com.github.t45k.abcd.clone.entity.CodeFragment;
 import org.eclipse.jdt.core.ToolFactory;

@@ -34,8 +34,33 @@ public class ConfigTest {
                 });
     }
 
-    public Config getStandardConfig(final int thresholdLine, final int thresholdToken) {
-        final String[] args = {"-s", ".", "-d", "3", "-o", "./output", "-f", "txt", "-b", ".", "-l", ".", "-tl", Integer.toString(thresholdLine), "-tt", Integer.toString(thresholdToken)};
+    public Config getThresholdConfig(final int thresholdLine, final int thresholdToken) {
+        final String[] args = {"-s", ".", "-d", "1", "-o", "./output", "-f", "txt", "-b", ".", "-l", ".", "-tl", Integer.toString(thresholdLine), "-tt", Integer.toString(thresholdToken)};
+        return Config.Builder.buildFromCmdLineArgs(args);
+    }
+
+    public Config getBinaryAndLibConfig(final String binaryPath, final String libPath) {
+        final String[] args = {"-s", ".", "-d", "3", "-o", "./output", "-f", "txt", "-b", binaryPath, "-l", libPath, "-tl", "0", "-tt", "0"};
+        return Config.Builder.buildFromCmdLineArgs(args);
+    }
+
+    public Config getNoBinaryAndLibConfig() {
+        final String[] args = {"-s", ".", "-d", "3", "-o", "./output", "-f", "txt", "-tl", "0", "-tt", "0"};
+        return Config.Builder.buildFromCmdLineArgs(args);
+    }
+
+    public Config getSrcDirConfig(final String srcDir) {
+        final String[] args = {"-s", srcDir, "-d", "3", "-o", "./output", "-f", "txt", "-tl", "0", "-tt", "0"};
+        return Config.Builder.buildFromCmdLineArgs(args);
+    }
+
+    public Config getStandardConfig() {
+        final String[] args = {"-s", ".", "-d", "1", "-o", "./output", "-f", "txt", "-b", "-tl", "0", "-tt", "0"};
+        return Config.Builder.buildFromCmdLineArgs(args);
+    }
+
+    public Config getBindingConfig(final String srcDir, final String binaryPath, final String libPath) {
+        final String[] args = {"-s", srcDir, "-d", "1", "-o", "./output", "-f", "txt", "-b", binaryPath, "-l", libPath, "-tl", "0", "-tt", "0"};
         return Config.Builder.buildFromCmdLineArgs(args);
     }
 }

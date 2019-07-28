@@ -1,5 +1,7 @@
 package com.github.t45k.abcd.clone.detection.normalizer;
 
+import com.github.t45k.abcd.Config;
+import com.github.t45k.abcd.ConfigTest;
 import com.github.t45k.abcd.ast.FileAST;
 import com.github.t45k.abcd.ast.constructor.ASTConstructor;
 import org.eclipse.jdt.core.compiler.InvalidInputException;
@@ -22,7 +24,8 @@ public class Type2NormalizerTest {
 
     private CompilationUnit getCompilationUnit() {
         final Path path = Paths.get("sample/cloneDetectionSample/src/normalizer");
-        final ASTConstructor astConstructor = ASTConstructor.create(path);
+        final Config config = new ConfigTest().getSrcDirConfig(path.toString());
+        final ASTConstructor astConstructor = ASTConstructor.create(config);
         final Set<FileAST> fileASTS = astConstructor.constructFileAST(path);
         final FileAST fileAST = fileASTS.iterator().next();
         return fileAST.getUnit();
