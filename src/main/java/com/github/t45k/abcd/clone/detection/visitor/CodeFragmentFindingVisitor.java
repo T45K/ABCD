@@ -154,7 +154,7 @@ public class CodeFragmentFindingVisitor extends ASTVisitor {
         } catch (final InvalidInputException e) {
             return false;
         }
-        System.out.println(numOfToken);
+
         return numOfToken >= config.getThresholdToken();
     }
 }

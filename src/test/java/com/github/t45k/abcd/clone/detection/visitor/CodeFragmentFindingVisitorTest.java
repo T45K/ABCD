@@ -20,10 +20,26 @@ public class CodeFragmentFindingVisitorTest {
     @Test
     public void test() {
         final FileAST fileAST = getFileASTForTest();
-        final Config config = new ConfigTest().getStandardConfig();
+        final Config config = new ConfigTest().getStandardConfig(0, 0);
         final Stream<CodeFragment> codeFragments = CodeFragmentFindingVisitor.findCodeFragments(DetectionMode.TYPE1, fileAST, config);
         final List<CodeFragment> list = codeFragments.collect(Collectors.toList());
         assertThat(list.size()).isEqualTo(10);
+    }
+
+    @Test
+    public void testThresholdLine() {
+        final FileAST fileAST = getFileASTForTest();
+        final Config config = new ConfigTest().getStandardConfig(100, 0);
+        final Stream<CodeFragment> codeFragments = CodeFragmentFindingVisitor.findCodeFragments(DetectionMode.TYPE1, fileAST, config);
+        assertThat(codeFragments).isEmpty();
+    }
+
+    @Test
+    public void testThresholdToken() {
+        final FileAST fileAST = getFileASTForTest();
+        final Config config = new ConfigTest().getStandardConfig(0, 110);
+        final Stream<CodeFragment> codeFragments = CodeFragmentFindingVisitor.findCodeFragments(DetectionMode.TYPE1, fileAST, config);
+        assertThat(codeFragments).isEmpty();
     }
 
     private FileAST getFileASTForTest() {
