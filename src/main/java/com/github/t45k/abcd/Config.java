@@ -91,7 +91,7 @@ class Config {
             } catch (CmdLineException e) {
                 logger.error("Invalid argument was specified", e);
                 cmdLineParser.printUsage(System.out);
-                System.exit(1);
+                throw new RuntimeException();
             }
 
             return builder.build();
