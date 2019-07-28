@@ -1,10 +1,14 @@
 package com.github.t45k.abcd.clone.detection.visitor;
 
+import com.github.t45k.abcd.Config;
 import com.github.t45k.abcd.ast.FileAST;
 import com.github.t45k.abcd.clone.detection.DetectionMode;
 import com.github.t45k.abcd.clone.detection.normalizer.CodeFragmentNormalizer;
 import com.github.t45k.abcd.clone.entity.CodeFragment;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.eclipse.jdt.core.ToolFactory;
+import org.eclipse.jdt.core.compiler.IScanner;
+import org.eclipse.jdt.core.compiler.ITerminalSymbols;
 import org.eclipse.jdt.core.compiler.InvalidInputException;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTVisitor;
@@ -30,16 +34,18 @@ public class CodeFragmentFindingVisitor extends ASTVisitor {
     private final CompilationUnit unit;
     private final Path filePath;
     private final Set<CodeFragment> codeFragments;
+    private final Config config;
 
-    private CodeFragmentFindingVisitor(final DetectionMode mode, final FileAST fileAST) {
+    private CodeFragmentFindingVisitor(final DetectionMode mode, final FileAST fileAST, final Config config) {
         this.normalizer = CodeFragmentNormalizer.create(mode);
         this.unit = fileAST.getUnit();
         this.filePath = fileAST.getPath();
         this.codeFragments = new HashSet<>();
+        this.config = config;
     }
 
-    public static Stream<CodeFragment> findCodeFragments(final DetectionMode mode, final FileAST fileAST) {
-        final CodeFragmentFindingVisitor visitor = new CodeFragmentFindingVisitor(mode, fileAST);
+    public static Stream<CodeFragment> findCodeFragments(final DetectionMode mode, final FileAST fileAST, final Config config) {
+        final CodeFragmentFindingVisitor visitor = new CodeFragmentFindingVisitor(mode, fileAST, config);
         fileAST.getUnit().accept(visitor);
 
         return visitor.getCloneSetMap().stream();
@@ -125,5 +131,21 @@ public class CodeFragmentFindingVisitor extends ASTVisitor {
     public boolean visit(final EnhancedForStatement node) {
         addCodeFragments(node);
         return super.visit(node);
+    }
+
+    private boolean isBeyondThresholdToken(final String codeFragment,final int thresholdToken) {
+        final IScanner scanner = ToolFactory.createScanner(false, false, true, false);
+        scanner.setSource(codeFragment.toCharArray());
+
+        int numOfToken = 0;
+        try {
+            while (scanner.getNextToken() != ITerminalSymbols.TokenNameEOF) {
+                numOfToken++;
+            }
+        }catch (final InvalidInputException e){
+            return false;
+        }
+
+        return numOfToken >= thresholdToken;
     }
 }
