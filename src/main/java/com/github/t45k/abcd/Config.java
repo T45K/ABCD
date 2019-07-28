@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-class Config {
+public class Config {
     private final Path srcDir;
     private final DetectionMode detectionMode;
     private final Path outputFile;
