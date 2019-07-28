@@ -89,7 +89,7 @@ class Config {
             try {
                 cmdLineParser.parseArgument(args);
             } catch (CmdLineException e) {
-                logger.error("Invalid argument was specified");
+                logger.error("Invalid argument was specified", e);
                 cmdLineParser.printUsage(System.out);
                 System.exit(1);
             }
@@ -126,7 +126,7 @@ class Config {
             this.binaryDir = Paths.get(binaryDir);
         }
 
-        @Option(name = "l", aliases = "--lib-dir", usage = "Directory of libraries")
+        @Option(name = "-l", aliases = "--lib-dir", usage = "Directory of libraries")
         private void setLibDir(final String libDir) {
             this.libDir = Paths.get(libDir);
         }
