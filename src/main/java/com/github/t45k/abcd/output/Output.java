@@ -25,7 +25,7 @@ public abstract class Output {
         throw new RuntimeException("You could not come here");
     }
 
-    public void output(final Path filePath, final Set<CloneSet> cloneSets) throws IOException{
+    public void output(final Path filePath, final Set<CloneSet> cloneSets) throws IOException {
         final String fileContents = convertCloneSetsToString(cloneSets);
 
         final Path outputFilePath = Paths.get(filePath.toString() + getExtension());
@@ -39,7 +39,7 @@ public abstract class Output {
             return;
         }
 
-        if (!Files.exists(filePath.getParent())) {
+        if (filePath.getParent() != null && !Files.exists(filePath.getParent())) {
             Files.createDirectories(filePath.getParent());
         }
 

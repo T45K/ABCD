@@ -76,4 +76,24 @@ public class OutputTextTest {
         assertThat(outputContents).contains("c 20 30");
         assertThat(outputContents).contains("d 30 40");
     }
+
+    @Test
+    public void testOutputHasNoParent() throws IOException {
+        final Path path = Paths.get("output");
+        final Output output = Output.create(Format.TXT);
+        final Path outputPath = Paths.get(path.toString() + ".txt");
+
+        output.output(path, ExampleClonesCreator.getCloneSets());
+
+        assertThat(outputPath).exists();
+
+        final String outputContents = new String(Files.readAllBytes(outputPath));
+        Files.delete(outputPath);
+
+        assertThat(outputContents).contains("clone set 1");
+        assertThat(outputContents).contains("a 0 10");
+        assertThat(outputContents).contains("b 10 20");
+        assertThat(outputContents).contains("c 20 30");
+        assertThat(outputContents).contains("d 30 40");
+    }
 }
