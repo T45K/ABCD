@@ -6,15 +6,15 @@ import org.eclipse.jdt.core.compiler.ITerminalSymbols;
 public class Type2Normalizer extends Type1Normalizer {
     @Override
     protected String getToken(final IScanner scanner, final int tokenType) {
-        if(isIdentifier(tokenType)){
+        if (isIdentifier(tokenType)) {
             return "$";
         }
 
         return new String(scanner.getCurrentTokenSource());
     }
 
-    private boolean isIdentifier(final int tokenType){
-        switch (tokenType){
+    private boolean isIdentifier(final int tokenType) {
+        switch (tokenType) {
             case ITerminalSymbols.TokenNameIdentifier:
             case ITerminalSymbols.TokenNameCharacterLiteral:
             case ITerminalSymbols.TokenNameDoubleLiteral:

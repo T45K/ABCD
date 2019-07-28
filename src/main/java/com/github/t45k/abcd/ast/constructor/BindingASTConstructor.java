@@ -1,5 +1,6 @@
 package com.github.t45k.abcd.ast.constructor;
 
+import com.github.t45k.abcd.Config;
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTParser;
 
@@ -15,10 +16,10 @@ public class BindingASTConstructor extends ASTConstructor {
     private final Path classpathRootPath;
     private final Path libRootPath;
 
-    protected BindingASTConstructor(final Path targetFileRootPath, final Path classpathRootPath, final Path libRootPath) {
-        this.targetFileRootPath = targetFileRootPath;
-        this.classpathRootPath = classpathRootPath;
-        this.libRootPath = libRootPath;
+    protected BindingASTConstructor(final Config config) {
+        this.targetFileRootPath = config.getSrcDir();
+        this.classpathRootPath = config.getBinaryDir();
+        this.libRootPath = config.getLibDir();
     }
 
     @Override
