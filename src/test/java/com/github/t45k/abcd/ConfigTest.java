@@ -33,4 +33,9 @@ public class ConfigTest {
                 .isInstanceOfSatisfying(RuntimeException.class, e -> {
                 });
     }
+
+    public Config getStandardConfig() {
+        final String[] args = {"-s", ".", "-d", "3", "-o", "./output", "-f", "txt", "-b", ".", "-l", ".", "-tl", "5", "-tt", "20"};
+        return Config.Builder.buildFromCmdLineArgs(args);
+    }
 }
