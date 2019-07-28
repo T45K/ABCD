@@ -11,11 +11,11 @@ public class ASTConstructorTest {
 
     @Test
     public void testCreate() {
-        final ASTConstructor nonBindingASTConstructor = ASTConstructor.create(null, null, null);
+        final ASTConstructor nonBindingASTConstructor = ASTConstructor.create(null);
         assertThat(nonBindingASTConstructor).isInstanceOf(NonBindingASTConstructor.class);
 
         final Path tmpPath = Paths.get("");
-        final ASTConstructor bindingASTConstructor = ASTConstructor.create(tmpPath, tmpPath, tmpPath);
+        final ASTConstructor bindingASTConstructor = ASTConstructor.create(tmpPath);
         assertThat(bindingASTConstructor).isInstanceOf(BindingASTConstructor.class);
     }
 }

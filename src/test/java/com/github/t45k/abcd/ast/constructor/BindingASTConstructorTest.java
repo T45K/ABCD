@@ -21,7 +21,7 @@ public class BindingASTConstructorTest {
     @Test
     public void testConstructAST() {
         final Path targetFilesRootPath = Paths.get(BASIC_PATH);
-        final ASTConstructor astConstructor = new BindingASTConstructor(targetFilesRootPath, targetFilesRootPath, targetFilesRootPath);
+        final ASTConstructor astConstructor = new BindingASTConstructor(targetFilesRootPath);
         final Set<FileAST> fileASTList = astConstructor.constructFileAST(targetFilesRootPath);
 
         assertThat(fileASTList).isNotNull();
@@ -37,7 +37,7 @@ public class BindingASTConstructorTest {
         final Path targetFilesRootPath = Paths.get(BASIC_PATH);
         final Method getTargetDirs = BindingASTConstructor.class.getDeclaredMethod("getTargetDirs", Path.class);
         getTargetDirs.setAccessible(true);
-        final ASTConstructor astConstructor = new BindingASTConstructor(targetFilesRootPath, targetFilesRootPath, targetFilesRootPath);
+        final ASTConstructor astConstructor = new BindingASTConstructor(targetFilesRootPath);
         final Set<Path> dirs = (Set<Path>) getTargetDirs.invoke(astConstructor, targetFilesRootPath);
 
         final Set<Path> paths = Stream.of(targetFilesRootPath, Paths.get(BASIC_PATH, "a"), Paths.get(BASIC_PATH, "a", "b"), Paths.get(BASIC_PATH, "c"), Paths.get(BASIC_PATH, "empty")).collect(Collectors.toSet());
@@ -51,7 +51,7 @@ public class BindingASTConstructorTest {
     public void testException() {
         final Path targetFilesRootPath = Paths.get(BASIC_PATH);
         final Path invalidPath = Paths.get("invalidPath");
-        final ASTConstructor astConstructor = new BindingASTConstructor(invalidPath, targetFilesRootPath, targetFilesRootPath);
+        final ASTConstructor astConstructor = new BindingASTConstructor(invalidPath);
         assertThatThrownBy(() -> astConstructor.constructFileAST(targetFilesRootPath))
                 .isInstanceOfSatisfying(RuntimeException.class, e -> assertThat(e.getMessage()).isEqualTo(INVALID_PATH_EXCEPTION_MESSAGE));
     }

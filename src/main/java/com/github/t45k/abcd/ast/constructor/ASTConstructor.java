@@ -1,5 +1,6 @@
 package com.github.t45k.abcd.ast.constructor;
 
+import com.github.t45k.abcd.Config;
 import com.github.t45k.abcd.ast.FileAST;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jdt.core.JavaCore;
@@ -20,11 +21,11 @@ import java.util.stream.Collectors;
 public abstract class ASTConstructor {
     static final String INVALID_PATH_EXCEPTION_MESSAGE = "Invalid path was specified";
 
-    public static ASTConstructor create(final Path targetFilesRootPath, final Path classpathRootPath, final Path libRootPath) {
-        if (classpathRootPath == null || libRootPath == null) {
+    public static ASTConstructor create(final Config config) {
+        if (config.getBinaryDir() == null || config.getLibDir() == null) {
             return new NonBindingASTConstructor();
         }
-        return new BindingASTConstructor(targetFilesRootPath, classpathRootPath, libRootPath);
+        return new BindingASTConstructor(config);
     }
 
     public Set<FileAST> constructFileAST(final Path targetFilesRootPath) {

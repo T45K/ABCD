@@ -26,7 +26,7 @@ public class CloneDetectionTest {
 
     private Set<FileAST> getFileASTForTest() {
         final Path rootPath = Paths.get("sample/cloneDetectionSample/src/detection");
-        final ASTConstructor astConstructor = ASTConstructor.create(rootPath, null, null);
+        final ASTConstructor astConstructor = ASTConstructor.create(rootPath);
         return astConstructor.constructFileAST(rootPath);
     }
 }

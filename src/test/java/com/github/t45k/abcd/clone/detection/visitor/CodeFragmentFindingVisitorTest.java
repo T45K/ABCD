@@ -44,7 +44,7 @@ public class CodeFragmentFindingVisitorTest {
 
     private FileAST getFileASTForTest() {
         final Path rootPath = Paths.get("sample/cloneDetectionSample/src/visitor");
-        final ASTConstructor astConstructor = ASTConstructor.create(rootPath, null, null);
+        final ASTConstructor astConstructor = ASTConstructor.create(rootPath);
         return astConstructor.constructFileAST(rootPath).iterator().next();
     }
 }

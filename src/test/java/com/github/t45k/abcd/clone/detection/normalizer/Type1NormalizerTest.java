@@ -22,7 +22,7 @@ public class Type1NormalizerTest {
 
     private CompilationUnit getCompilationUnit(){
         final Path path = Paths.get("sample/cloneDetectionSample/src/normalizer");
-        final ASTConstructor astConstructor = ASTConstructor.create(path, null, null);
+        final ASTConstructor astConstructor = ASTConstructor.create(path);
         final Set<FileAST> fileASTS = astConstructor.constructFileAST(path);
         final FileAST fileAST = fileASTS.iterator().next();
         return fileAST.getUnit();
