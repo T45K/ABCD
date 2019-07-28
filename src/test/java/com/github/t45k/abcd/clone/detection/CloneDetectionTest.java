@@ -17,7 +17,7 @@ public class CloneDetectionTest {
     @Test
     public void test() {
         final Config config = new ConfigTest().getStandardConfig(0, 0);
-        final CloneDetection cloneDetection = new CloneDetection(DetectionMode.TYPE1, config);
+        final CloneDetection cloneDetection = new CloneDetection(config);
         final Set<CloneSet> cloneSets = cloneDetection.detectClones(getFileASTForTest());
         assertThat(cloneSets).hasSize(1);
         final CloneSet cloneSet = cloneSets.iterator().next();

@@ -5,7 +5,6 @@ import com.github.t45k.abcd.ast.FileAST;
 import com.github.t45k.abcd.clone.detection.DetectionMode;
 import com.github.t45k.abcd.clone.detection.normalizer.CodeFragmentNormalizer;
 import com.github.t45k.abcd.clone.entity.CodeFragment;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.eclipse.jdt.core.ToolFactory;
 import org.eclipse.jdt.core.compiler.IScanner;
 import org.eclipse.jdt.core.compiler.ITerminalSymbols;
@@ -36,16 +35,16 @@ public class CodeFragmentFindingVisitor extends ASTVisitor {
     private final Set<CodeFragment> codeFragments;
     private final Config config;
 
-    private CodeFragmentFindingVisitor(final DetectionMode mode, final FileAST fileAST, final Config config) {
-        this.normalizer = CodeFragmentNormalizer.create(mode);
+    private CodeFragmentFindingVisitor(final FileAST fileAST, final Config config) {
+        this.normalizer = CodeFragmentNormalizer.create(config.getDetectionMode());
         this.unit = fileAST.getUnit();
         this.filePath = fileAST.getPath();
         this.codeFragments = new HashSet<>();
         this.config = config;
     }
 
-    public static Stream<CodeFragment> findCodeFragments(final DetectionMode mode, final FileAST fileAST, final Config config) {
-        final CodeFragmentFindingVisitor visitor = new CodeFragmentFindingVisitor(mode, fileAST, config);
+    public static Stream<CodeFragment> findCodeFragments(final FileAST fileAST, final Config config) {
+        final CodeFragmentFindingVisitor visitor = new CodeFragmentFindingVisitor(fileAST, config);
         fileAST.getUnit().accept(visitor);
 
         return visitor.getCloneSetMap().stream();

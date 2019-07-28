@@ -10,17 +10,15 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class CloneDetection {
-    private final DetectionMode mode;
     private final Config config;
 
-    public CloneDetection(final DetectionMode mode, final Config config) {
-        this.mode = mode;
+    public CloneDetection(final Config config) {
         this.config = config;
     }
 
     public Set<CloneSet> detectClones(final Set<FileAST> fileASTs) {
         return fileASTs.stream()
-                .flatMap(fileAST -> CodeFragmentFindingVisitor.findCodeFragments(this.mode, fileAST, config))
+                .flatMap(fileAST -> CodeFragmentFindingVisitor.findCodeFragments(fileAST, config))
                 .collect(Collectors.groupingBy(
                         CodeFragment::getHashValue,
                         Collectors.toSet()
