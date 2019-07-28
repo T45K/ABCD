@@ -7,7 +7,7 @@ import org.eclipse.jdt.core.dom.ASTNode;
 public interface CodeFragmentNormalizer {
     String normalize(final ASTNode codeFragment) throws InvalidInputException;
 
-    public static CodeFragmentNormalizer create(final DetectionMode mode) {
+    static CodeFragmentNormalizer create(final DetectionMode mode) {
         switch (mode) {
             case TYPE1:
                 return new Type1Normalizer();
