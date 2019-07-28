@@ -56,6 +56,10 @@ public class CodeFragmentFindingVisitor extends ASTVisitor {
     }
 
     private void addCodeFragments(final ASTNode node) {
+        if (!isBeyondThresholdToken(node.toString())) {
+            return;
+        }
+
         final String normalizedFragment;
         try {
             normalizedFragment = this.normalizer.normalize(node);
@@ -68,6 +72,10 @@ public class CodeFragmentFindingVisitor extends ASTVisitor {
         final int startLineNumber = this.unit.getLineNumber(startPosition);
         final int endPosition = startPosition + node.getLength() - 1;
         final int endLineNumber = this.unit.getLineNumber(endPosition);
+
+        if (endLineNumber - startLineNumber + 1 < config.getThresholdLine()) {
+            return;
+        }
 
         final CodeFragment codeFragment = new CodeFragment(this.filePath, startLineNumber, endLineNumber, normalizedFragment);
         this.codeFragments.add(codeFragment);
@@ -133,7 +141,7 @@ public class CodeFragmentFindingVisitor extends ASTVisitor {
         return super.visit(node);
     }
 
-    private boolean isBeyondThresholdToken(final String codeFragment,final int thresholdToken) {
+    private boolean isBeyondThresholdToken(final String codeFragment) {
         final IScanner scanner = ToolFactory.createScanner(false, false, true, false);
         scanner.setSource(codeFragment.toCharArray());
 
@@ -142,10 +150,10 @@ public class CodeFragmentFindingVisitor extends ASTVisitor {
             while (scanner.getNextToken() != ITerminalSymbols.TokenNameEOF) {
                 numOfToken++;
             }
-        }catch (final InvalidInputException e){
+        } catch (final InvalidInputException e) {
             return false;
         }
 
-        return numOfToken >= thresholdToken;
+        return numOfToken >= config.getThresholdLine();
     }
 }
