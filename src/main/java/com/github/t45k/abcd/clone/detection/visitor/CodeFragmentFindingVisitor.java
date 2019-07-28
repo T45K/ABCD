@@ -57,6 +57,7 @@ public class CodeFragmentFindingVisitor extends ASTVisitor {
 
     private void addCodeFragments(final ASTNode node) {
         if (!isBeyondThresholdToken(node.toString())) {
+            System.out.println("fff");
             return;
         }
 
@@ -153,7 +154,7 @@ public class CodeFragmentFindingVisitor extends ASTVisitor {
         } catch (final InvalidInputException e) {
             return false;
         }
-
-        return numOfToken >= config.getThresholdLine();
+        System.out.println(numOfToken);
+        return numOfToken >= config.getThresholdToken();
     }
 }
