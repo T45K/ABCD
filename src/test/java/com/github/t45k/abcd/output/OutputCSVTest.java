@@ -30,5 +30,4 @@ public class OutputCSVTest {
         assertThat(outputContents).contains("c,20,30");
         assertThat(outputContents).contains("d,30,40");
     }
-
 }
