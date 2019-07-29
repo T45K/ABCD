@@ -55,7 +55,6 @@ public class CodeFragmentFindingVisitor extends ASTVisitor {
 
     private void addCodeFragments(final ASTNode node) {
         if (!isBeyondThresholdToken(node.toString())) {
-            System.out.println("fff");
             return;
         }
 
