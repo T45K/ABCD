@@ -19,11 +19,8 @@ public class CloneDetection {
     public Set<CloneSet> detectClones(final Set<FileAST> fileASTs) {
         return fileASTs.stream()
                 .flatMap(fileAST -> CodeFragmentFindingVisitor.findCodeFragments(fileAST, config))
-                .collect(Collectors.groupingBy(
-                        CodeFragment::getHashValue,
-                        Collectors.toSet()
-                        )
-                ).values()
+                .collect(Collectors.groupingBy(CodeFragment::getHashValue, Collectors.toSet()))
+                .values()
                 .stream()
                 .filter(set -> set.size() > 1)
                 .map(CloneSet::new)
