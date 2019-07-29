@@ -1,6 +1,7 @@
 package com.github.t45k.abcd.output;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
 import java.nio.file.Path;
@@ -19,8 +20,9 @@ public class OutputXML extends Output {
                 .collect(Collectors.toList());
 
         final XmlMapper xmlMapper = new XmlMapper();
+        xmlMapper.enable(SerializationFeature.INDENT_OUTPUT);
         try {
-            return xmlMapper.writeValueAsString(cloneSetListForXML);
+            return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + xmlMapper.writeValueAsString(cloneSetListForXML);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
             throw new RuntimeException("failed to create XML");
