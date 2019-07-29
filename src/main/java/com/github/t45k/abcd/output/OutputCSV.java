@@ -4,7 +4,6 @@ import com.github.t45k.abcd.clone.entity.CloneSet;
 import com.github.t45k.abcd.clone.entity.CodeFragment;
 
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 public class OutputCSV extends Output {
@@ -19,14 +18,14 @@ public class OutputCSV extends Output {
         return firstLine + table;
     }
 
-    private String convertCloneSetToString(final CloneSet cloneSet){
+    private String convertCloneSetToString(final CloneSet cloneSet) {
         return cloneSet.getCloneSet().stream()
                 .map(this::convertElementsToString)
                 .collect(Collectors.joining("\n"));
     }
 
-    private String convertElementsToString(final CodeFragment codeFragment){
-        return codeFragment.getFilePath() + "," + codeFragment.getStartLine()  + "," + codeFragment.getEndLine();
+    private String convertElementsToString(final CodeFragment codeFragment) {
+        return codeFragment.getFilePath() + "," + codeFragment.getStartLine() + "," + codeFragment.getEndLine();
     }
 
     @Override
