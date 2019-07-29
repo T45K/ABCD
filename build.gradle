@@ -77,7 +77,7 @@ run {
 jar {
     // Specify App's entry point
     manifest {
-        attributes "Main-Class": "foo.bar"
+        attributes "Main-Class": "com.github.t45k.abcd.App"
     }
     from { (configurations.runtime).collect { it.isDirectory() ? it : zipTree(it) } } {
         exclude 'META-INF/*.RSA', 'META-INF/*.SF', 'META-INF/*.DSA'
