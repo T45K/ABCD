@@ -8,7 +8,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.filter;
 
 public class OutputXMLTest {
     @Test
@@ -25,22 +24,19 @@ public class OutputXMLTest {
         Files.delete(outputPath);
         Files.delete(outputPath.getParent());
 
-        final String cloneA =
-                "      <clones>\n" +
+        final String cloneA = "      <clones>\n" +
                 "        <filePath>a</filePath>\n" +
                 "        <startLine>0</startLine>\n" +
                 "        <endLine>10</endLine>\n" +
                 "      </clones>";
 
-        final String cloneB =
-                "      <clones>\n" +
+        final String cloneB = "      <clones>\n" +
                 "        <filePath>b</filePath>\n" +
                 "        <startLine>10</startLine>\n" +
                 "        <endLine>20</endLine>\n" +
                 "      </clones>";
 
-        final String cloneC =
-                "      <clones>\n" +
+        final String cloneC = "      <clones>\n" +
                 "        <filePath>c</filePath>\n" +
                 "        <startLine>20</startLine>\n" +
                 "        <endLine>30</endLine>\n" +
@@ -48,10 +44,10 @@ public class OutputXMLTest {
 
         final String cloneD =
                 "      <clones>\n" +
-                "        <filePath>d</filePath>\n" +
-                "        <startLine>30</startLine>\n" +
-                "        <endLine>40</endLine>\n" +
-                "      </clones>";
+                        "        <filePath>d</filePath>\n" +
+                        "        <startLine>30</startLine>\n" +
+                        "        <endLine>40</endLine>\n" +
+                        "      </clones>";
 
         assertThat(outputContents).contains(cloneA);
         assertThat(outputContents).contains(cloneB);
