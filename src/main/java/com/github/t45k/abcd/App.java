@@ -8,20 +8,30 @@ import com.github.t45k.abcd.ast.constructor.ASTConstructor;
 import com.github.t45k.abcd.clone.detection.CloneDetection;
 import com.github.t45k.abcd.clone.entity.CloneSet;
 import com.github.t45k.abcd.output.Output;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Set;
 
 public class App {
+    private static Logger logger = LoggerFactory.getLogger(App.class);
+
     public static void main(final String[] args) throws IOException {
+        logger.info("welcome!");
         final Config config = Config.Builder.buildFromCmdLineArgs(args);
         final ASTConstructor astConstructor = ASTConstructor.create(config);
         final Set<FileAST> fileASTs = astConstructor.constructFileAST(config.getSrcDir());
 
+        logger.info("Clone Detection Starts...");
         final CloneDetection cloneDetection = new CloneDetection(config);
         final Set<CloneSet> cloneSets = cloneDetection.detectClones(fileASTs);
+        logger.info("Clone Detection Finish!");
 
+        logger.info("File outputting...");
         final Output output = Output.create(config.getFormat());
         output.output(config.getOutputFile(), cloneSets);
+        logger.info("File output finish");
+        logger.info("see " + config.getOutputFile());
     }
 }
