@@ -37,7 +37,6 @@ dependencies {
     compile group: 'com.google.guava', name: 'guava', version: '11.0.2'
     compile group: 'commons-codec', name: 'commons-codec', version: '1.12'
 
-
     // Use args4j
     compile group: 'args4j', name: 'args4j', version: '2.33'
 
@@ -48,6 +47,7 @@ dependencies {
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.9.7'
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.7'
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.9.7'
+    compile group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-xml', version: '2.9.7'
 
     // Measure coverage
     compile 'org.jacoco:org.jacoco.core:0.8.1'
