@@ -69,7 +69,7 @@ mainClassName = 'com.github.t45k.abcd.App'
 
 run {
     if (project.hasProperty('args')) {
-        args project.args.split('\\s+')
+        args project.args.split('\\s+' as Closure)
     }
 }
 
