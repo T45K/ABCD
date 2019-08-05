@@ -19,6 +19,23 @@ public class OriginalNormalizer extends ASTVisitor implements CodeFragmentNormal
     }
 
     @SuppressWarnings("unchecked")
+    public static void replaceNode(final ASTNode oldNode, final ASTNode newNode) {
+        final StructuralPropertyDescriptor locationInParent = oldNode.getLocationInParent();
+
+        final ASTNode copiedNode = ASTNode.copySubtree(oldNode.getAST(), newNode);
+
+        if (locationInParent.isChildListProperty()) {
+            final List<ASTNode> siblings = (List<ASTNode>) oldNode.getParent().getStructuralProperty(locationInParent);
+            final int replaceIdx = siblings.indexOf(oldNode);
+            siblings.set(replaceIdx, copiedNode);
+        } else if (locationInParent.isChildProperty()) {
+            oldNode.getParent().setStructuralProperty(locationInParent, copiedNode);
+        } else {
+            throw new RuntimeException("can't replace node");
+        }
+    }
+
+    @SuppressWarnings("unchecked")
     private ASTNode getNodeInCopiedStatement(final ASTNode targetNode, final ASTNode statement, final ASTNode copiedStatement) {
         final Deque<StructuralPropertyDescriptor> structuralPropertyDescriptorStack = new ArrayDeque<>();
         final Deque<Integer> indexStack = new ArrayDeque<>();
