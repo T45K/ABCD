@@ -9,14 +9,17 @@ import java.util.Deque;
 import java.util.List;
 
 public class OriginalNormalizer extends ASTVisitor implements CodeFragmentNormalizer {
+    private ASTNode copiedNode;
+
     @Override
     public String normalize(final ASTNode codeFragment) {
-        final ASTNode copiedNode = ASTNode.copySubtree(codeFragment.getAST(), codeFragment);
-        return null;
+        copiedNode = ASTNode.copySubtree(codeFragment.getAST(), codeFragment);
+        codeFragment.accept(this);
+        return copiedNode.toString();
     }
 
     @SuppressWarnings("unchecked")
-    public static ASTNode getNodeInCopiedStatement(final ASTNode targetNode, final ASTNode statement, final ASTNode copiedStatement) {
+    private ASTNode getNodeInCopiedStatement(final ASTNode targetNode, final ASTNode statement, final ASTNode copiedStatement) {
         final Deque<StructuralPropertyDescriptor> structuralPropertyDescriptorStack = new ArrayDeque<>();
         final Deque<Integer> indexStack = new ArrayDeque<>();
         ASTNode repetitionChangingNode = targetNode;
@@ -34,7 +37,7 @@ public class OriginalNormalizer extends ASTVisitor implements CodeFragmentNormal
     }
 
     @SuppressWarnings("unchecked")
-    private static ASTNode getTargetNode(final ASTNode copiedStatement, final Deque<StructuralPropertyDescriptor> structuralStack, final Deque<Integer> indexStack){
+    private ASTNode getTargetNode(final ASTNode copiedStatement, final Deque<StructuralPropertyDescriptor> structuralStack, final Deque<Integer> indexStack) {
         ASTNode target = copiedStatement;
         while (structuralStack.size() != 0) {
             final StructuralPropertyDescriptor locationInParent = structuralStack.pop();
