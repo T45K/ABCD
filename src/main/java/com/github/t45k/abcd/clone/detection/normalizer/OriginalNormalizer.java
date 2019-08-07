@@ -167,7 +167,10 @@ public class OriginalNormalizer extends ASTVisitor implements CodeFragmentNormal
         while (structuralStack.size() != 0) {
             final StructuralPropertyDescriptor locationInParent = structuralStack.pop();
             if (locationInParent.isChildListProperty()) {
-                target = ((List<ASTNode>) target.getStructuralProperty(locationInParent)).get(indexStack.poll());
+                final Integer index = indexStack.poll();
+                if (index != null) {
+                    target = ((List<ASTNode>) target.getStructuralProperty(locationInParent)).get(index);
+                }
             } else if (locationInParent.isChildProperty()) {
                 target = (ASTNode) target.getStructuralProperty(locationInParent);
             } else {
