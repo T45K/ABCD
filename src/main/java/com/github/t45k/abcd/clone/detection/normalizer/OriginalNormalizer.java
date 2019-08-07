@@ -143,26 +143,30 @@ public class OriginalNormalizer extends ASTVisitor implements CodeFragmentNormal
         }
     }
 
-    @SuppressWarnings("unchecked")
     private ASTNode getNodeInCopiedStatement(final ASTNode targetNode, final ASTNode statement, final ASTNode copiedStatement) {
         final Deque<StructuralPropertyDescriptor> structuralPropertyDescriptorStack = new ArrayDeque<>();
         final Deque<Integer> indexStack = new ArrayDeque<>();
+        pushTargetNodeLocation(targetNode, statement, structuralPropertyDescriptorStack, indexStack);
+
+        return popTargetNode(copiedStatement, structuralPropertyDescriptorStack, indexStack);
+    }
+
+    @SuppressWarnings("unchecked")
+    private void pushTargetNodeLocation(final ASTNode targetNode, final ASTNode statement, final Deque<StructuralPropertyDescriptor> structuralStack, final Deque<Integer> indexStack) {
         ASTNode repetitionChangingNode = targetNode;
         while (repetitionChangingNode != statement) {
             final StructuralPropertyDescriptor locationInParent = repetitionChangingNode.getLocationInParent();
-            structuralPropertyDescriptorStack.push(locationInParent);
+            structuralStack.push(locationInParent);
             if (locationInParent.isChildListProperty()) {
                 List<ASTNode> list = (List<ASTNode>) repetitionChangingNode.getParent().getStructuralProperty(locationInParent);
                 indexStack.push(list.indexOf(repetitionChangingNode));
             }
             repetitionChangingNode = repetitionChangingNode.getParent();
         }
-
-        return getTargetNode(copiedStatement, structuralPropertyDescriptorStack, indexStack);
     }
 
     @SuppressWarnings("unchecked")
-    private ASTNode getTargetNode(final ASTNode copiedStatement, final Deque<StructuralPropertyDescriptor> structuralStack, final Deque<Integer> indexStack) {
+    private ASTNode popTargetNode(final ASTNode copiedStatement, final Deque<StructuralPropertyDescriptor> structuralStack, final Deque<Integer> indexStack) {
         ASTNode target = copiedStatement;
         while (structuralStack.size() != 0) {
             final StructuralPropertyDescriptor locationInParent = structuralStack.pop();
