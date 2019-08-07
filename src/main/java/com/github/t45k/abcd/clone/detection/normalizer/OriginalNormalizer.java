@@ -19,7 +19,7 @@ public class OriginalNormalizer extends ASTVisitor implements CodeFragmentNormal
     }
 
     @SuppressWarnings("unchecked")
-    public static void replaceNode(final ASTNode oldNode, final ASTNode newNode) {
+    private void replaceNode(final ASTNode oldNode, final ASTNode newNode) {
         final StructuralPropertyDescriptor locationInParent = oldNode.getLocationInParent();
 
         final ASTNode copiedNode = ASTNode.copySubtree(oldNode.getAST(), newNode);
